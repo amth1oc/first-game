@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://12rt3qymk8hn"]
+
+[ext_resource type="Texture2D" uid="uid://dlmss2c31v4qu" path="res://Addons Weapons/lỗ đạn.png" id="1_axmkt"]
+[ext_resource type="Script" uid="uid://wmhed037q66f" path="res://Bullet/Scene/bullet_decal.gd" id="2_iph8d"]
+
+[node name="BulletDecal" type="Decal"]
+size = Vector3(0.7, 0.7, 0.7)
+texture_albedo = ExtResource("1_axmkt")
+script = ExtResource("2_iph8d")

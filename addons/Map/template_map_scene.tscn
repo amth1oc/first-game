@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://ctf1yf3optph8" path="res://addons/Map/MovementModifiers/gravityZone/gravity_zone_scene.tscn" id="5_y6tot"]
 [ext_resource type="PackedScene" uid="uid://d4gavwq81shmv" path="res://addons/Map/MovementModifiers/conveyorZone/conveyor_zone_scene.tscn" id="7_q4rg5"]
 [ext_resource type="PackedScene" uid="uid://ct3rwravhrwk1" path="res://addons/Map/MovementModifiers/jumpPads/directionalJumpPad/directional_jump_pad_scene.tscn" id="8_q4rg5"]
-[ext_resource type="Texture2D" uid="uid://dxah85vlqcjom" path="res://Package_temple/AncientTemple.png" id="9_jtukm"]
-[ext_resource type="ArrayMesh" uid="uid://ca1xepjbwrjnc" path="res://Package_temple/AncientTemple.obj" id="10_jtukm"]
+[ext_resource type="Texture2D" uid="uid://dxah85vlqcjom" path="res://addons/Package_temple/AncientTemple.png" id="9_jtukm"]
+[ext_resource type="ArrayMesh" uid="uid://ca1xepjbwrjnc" path="res://addons/Package_temple/AncientTemple.obj" id="10_jtukm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fjbi6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

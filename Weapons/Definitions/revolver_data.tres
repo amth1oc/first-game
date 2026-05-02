@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=4 format=3 uid="uid://bntjn4dlwhq16"]
+
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="1_csqd6"]
+[ext_resource type="PackedScene" uid="uid://bw5486snk56h1" path="res://Bullet/Scene/Revolver_Equipped.tscn" id="2_rcv3m"]
+[ext_resource type="PackedScene" uid="uid://cbi0vlvogoy8i" path="res://Weapons/Definitions/revolver_pickup.tscn" id="3_3dxjp"]
+
+[resource]
+script = ExtResource("1_csqd6")
+weapon_equipped_scene = ExtResource("2_rcv3m")
+weapon_pickup_scene = ExtResource("3_3dxjp")
+max_magazine_capacity = 6
+max_total_ammo = 12
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

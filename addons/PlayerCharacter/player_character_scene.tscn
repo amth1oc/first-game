@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=31 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -6,10 +6,14 @@
 [ext_resource type="Script" uid="uid://hc1xroood24q" path="res://addons/PlayerCharacter/StateMachine/slide_state_script.gd" id="10_poibi"]
 [ext_resource type="Script" uid="uid://c4skioddhqatw" path="res://addons/PlayerCharacter/StateMachine/dash_state_script.gd" id="11_khex2"]
 [ext_resource type="Script" uid="uid://bq1stj2mujnp2" path="res://addons/PlayerCharacter/StateMachine/wallrun_state_script.gd" id="12_5fuve"]
+[ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="14_dp0tn"]
 [ext_resource type="LabelSettings" uid="uid://bs0stms0b56kp" path="res://addons/Arts/label_settings.tres" id="14_gfbru"]
 [ext_resource type="Shader" uid="uid://b34228uop3gdf" path="res://addons/PlayerCharacter/Shaders/speed_lines_shader.gdshader" id="14_jv0i6"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="15_pp6m3"]
 [ext_resource type="Script" uid="uid://dx02l6p6behb8" path="res://addons/PlayerCharacter/UI/hud_script.gd" id="16_5jm78"]
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
+[ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
+[ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
 [ext_resource type="Script" uid="uid://sca7ypsol83f" path="res://addons/PlayerCharacter/StateMachine/state_machine_script.gd" id="54_e0r17"]
 [ext_resource type="Script" uid="uid://stil4xkf3tk0" path="res://addons/PlayerCharacter/StateMachine/idle_state_script.gd" id="55_dayh2"]
@@ -32,7 +36,7 @@ point_count = 2
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5yjma"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bkys"]
-albedo_color = Color(0.196078, 0.223529, 1, 1)
+albedo_color = Color(0.19641912, 0.82665706, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_p2iaj"]
 
@@ -53,13 +57,14 @@ shader_parameter/mask_size = 0.1
 shader_parameter/mask_edge = 0.800000038
 shader_parameter/animation_speed = 20.0
 
-[node name="PlayerCharacter" type="CharacterBody3D" groups=["PlayerCharacter"]]
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("weapons_manager") groups=["PlayerCharacter"]]
 collision_layer = 2
 floor_block_on_wall = false
 floor_max_angle = 1.13446
 floor_snap_length = 0.0
 platform_floor_layers = 4278190081
 script = ExtResource("1_h128t")
+weapons_manager = NodePath("CameraHolder/Camera/WeaponManager")
 desired_move_speed_curve = SubResource("Curve_s7fsc")
 in_air_move_speed_curve = SubResource("Curve_gfbru")
 
@@ -107,9 +112,10 @@ metadata/_custom_type_script = "uid://8g033x6qm1rx"
 script = ExtResource("12_5fuve")
 metadata/_custom_type_script = "uid://bq1stj2mujnp2"
 
-[node name="CameraHolder" type="Node3D" parent="."]
+[node name="CameraHolder" type="Node3D" parent="." node_paths=PackedStringArray("weapons_manager")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.715, 0)
 script = ExtResource("2_x12n0")
+weapons_manager = NodePath("Camera/WeaponManager")
 
 [node name="Camera" type="Camera3D" parent="CameraHolder"]
 unique_name_in_owner = true
@@ -136,6 +142,22 @@ exclude_parent = false
 target_position = Vector3(-1, 0, 0)
 collision_mask = 4
 debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
+
+[node name="WeaponManager" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("shooter_body", "aim_ray")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.666, -0.304, -0.409)
+script = ExtResource("14_dp0tn")
+weapon_data_array = Array[ExtResource("15_pp6m3")]([ExtResource("16_ifmfs")])
+shooter_body = NodePath("../../..")
+aim_ray = NodePath("../CameraRaycasts/AimRay")
+
+[node name="CameraRaycasts" type="Node3D" parent="CameraHolder/Camera"]
+script = ExtResource("17_ifmfs")
+
+[node name="AimRay" type="RayCast3D" parent="CameraHolder/Camera/CameraRaycasts"]
+target_position = Vector3(0, 0, -100)
+
+[node name="InteractRay" type="RayCast3D" parent="CameraHolder/Camera/CameraRaycasts"]
+target_position = Vector3(0, 0, -2.5)
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5yjma")

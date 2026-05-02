@@ -9,6 +9,10 @@ var move_deccel: float
 var input_direction: Vector2
 var move_direction: Vector3
 var desired_move_speed: float
+
+@export_group("Components")
+@export var weapons_manager: WeaponManager
+
 @export var desired_move_speed_curve: Curve #accumulated speed
 @export var max_desired_move_speed: float = 30.0
 @export var in_air_move_speed_curve: Curve
@@ -140,6 +144,11 @@ var fly_boost_on: bool = false
 @export var slide_action: StringName = "slide"
 @export var dash_action: StringName = "dash"
 @export var fly_action: StringName = "fly"
+@export var reload_action : StringName = "reload"
+@export var inspect_action : StringName = "inspect"
+@export var throw_weapon : StringName = "throw_weapon"
+@export var interact : StringName = "interact"
+
 @onready var input_actions_list : Array[StringName] = [move_forward_action, move_backward_action, move_left_action, move_right_action, 
 run_action, crouch_action, jump_action, slide_action, dash_action, fly_action]
 @export var check_on_ready_if_inputs_registered : bool = true
@@ -181,6 +190,7 @@ func _ready() -> void:
 	
 	build_default_keybinding()
 	input_actions_check()
+
 	
 func build_default_keybinding() -> void:
 	#build it in runtime to ensure that export variables have been set
@@ -194,7 +204,11 @@ func build_default_keybinding() -> void:
 		jump_action : [Key.KEY_SPACE],
 		slide_action : [Key.KEY_E],
 		dash_action : [Key.KEY_Q],
-		fly_action : [Key.KEY_F]
+		fly_action : [Key.KEY_F],
+		reload_action : [Key.KEY_R],
+		inspect_action : [Key.KEY_Y],
+		throw_weapon : [Key.KEY_G],
+		interact : [Key.KEY_V]
 	}
 	
 func input_actions_check() -> void:
@@ -223,6 +237,10 @@ func input_actions_check() -> void:
 					var input_event_key = InputEventKey.new()
 					input_event_key.physical_keycode = keycode
 					InputMap.action_add_event(input_action, input_event_key)
+					
+
+
+
 				
 func _process(delta: float) -> void:
 	wallrun_timer(delta)
