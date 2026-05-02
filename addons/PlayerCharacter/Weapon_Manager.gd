@@ -47,9 +47,11 @@ func _initialize_all_weapons() -> void:
 			weapon_instance.shooter_body = shooter_body
 
 			# Truyền AimRay từ camera xuống weapon instance
-			if weapon_instance.has_method("set_aim_ray"):
-				weapon_instance.set_aim_ray(aim_ray)
-
+			#if weapon_instance.has_method("set_aim_ray"):
+			#	weapon_instance.set_aim_ray(aim_ray)
+			# vì đã có Hiện tại AimRay được truy cập gián tiếp 
+			#qua WeaponManager.get_hit_result_from_aim_ray() 
+			#rồi lưu vào current_hit_result
 
 			# We will add a function to our weapon scenes later to pass the data
 			if weapon_instance.has_method("set_weapon_data"):
@@ -201,6 +203,13 @@ func throw_current_weapon(throw_force: Vector3 = Vector3.ZERO) -> bool:
 		return true
 	return false
 
+###inspect curent weapon 
+func inspect_current_weapon() -> void:
+	if current_weapon_instance:
+		if current_weapon_instance.has_node("WeaponStateMachine"):
+			current_weapon_instance.get_node("WeaponStateMachine").send_action("inspect")
+
+
 func get_throw_direction(throw_strength: float = 7.5) -> Vector3:
 	# We'll use the camera's forward direction to aim the throw.
 	var camera = get_viewport().get_camera_3d()
@@ -254,8 +263,8 @@ func pickup_weapon(new_weapon_data: WeaponData) -> bool:
 		weapon_instance.shooter_body = shooter_body
 	
 	# Truyền AimRay từ camera xuống weapon instance
-		if weapon_instance.has_method("set_aim_ray"):
-			weapon_instance.set_aim_ray(aim_ray)
+	#	if weapon_instance.has_method("set_aim_ray"):
+	#		weapon_instance.set_aim_ray(aim_ray)
 
 		
 		add_child(weapon_instance)

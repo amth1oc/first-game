@@ -249,6 +249,11 @@ func _process(delta: float) -> void:
 
 	dash_timer(delta)
 	
+	###############thêm vào để nhận inspect weapon
+	if Input.is_action_just_pressed("inspect_weapon"):
+		weapons_manager.inspect_current_weapon()
+
+	
 func _physics_process(_delta: float) -> void:
 	modify_physics_properties()
 

@@ -1,14 +1,28 @@
 extends Node3D
 # Script này gắn ở Node ngoài cùng của Scene vũ khí (vd: RevolverEquipped)
 
-@export var weapon_data: Resource # Resource WeaponData
+@export var weapon_data: WeaponData # Resource WeaponData
 @export var muzzle_point: Marker3D
 @export var tracer_scene: PackedScene
 @export var decal_scene: PackedScene
+###thêm animation player
+@onready var anim_player: AnimationPlayer = $AnimationPlayerReload
+
 
 # Biến tạm để lưu dữ liệu mục tiêu khi người chơi bấm bắn
 var current_hit_result: Dictionary
-var shooter_body: Node3D
+#var shooter_body: Node3D
+# ĐỔI từ: var shooter_body: Node3D
+# THÀNH: property có setter
+
+var shooter_body: Node3D:
+	set(value):
+		shooter_body = value
+		# Khi WeaponManager gán shooter_body, ngay lập tức truyền xuống WeaponSway
+		if has_node("Model_Holder"):
+			var model_holder = get_node("Model_Holder")
+			if model_holder.has_method("set_player"):
+				model_holder.set_player(value)
 
 func set_weapon_data(data: WeaponData) -> void:
 	weapon_data = data
@@ -40,8 +54,8 @@ func fire_weapon(hit_result: Dictionary) -> void:
 			model_holder.apply_recoil(weapon_data)
 			
 	# Gọi độ giật Camera
-	if shooter_body and shooter_body.has_node("CameraHolder"):
-		var cam_holder = shooter_body.get_node("CameraHolder")
+	if shooter_body and shooter_body.has_node("%CameraHolder"):
+		var cam_holder = shooter_body.get_node("%CameraHolder")
 		if cam_holder.has_method("apply_camera_recoil"):
 			cam_holder.apply_camera_recoil(weapon_data)
 

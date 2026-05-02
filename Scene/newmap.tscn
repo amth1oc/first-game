@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://y1ujau5wy4yi"]
+[gd_scene load_steps=32 format=3 uid="uid://y1ujau5wy4yi"]
 
 [ext_resource type="Shader" uid="uid://sm52k7unxjjc" path="res://addons/Shaders/SkyShader.gdshader" id="1_3hddq"]
 [ext_resource type="Texture2D" uid="uid://bj6anxtmr5pse" path="res://addons/Png/sun.png" id="2_miqp1"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://d4gavwq81shmv" path="res://addons/Map/MovementModifiers/conveyorZone/conveyor_zone_scene.tscn" id="11_lx3yh"]
 [ext_resource type="PackedScene" uid="uid://ctf1yf3optph8" path="res://addons/Map/MovementModifiers/gravityZone/gravity_zone_scene.tscn" id="12_xwt62"]
 [ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://addons/PlayerCharacter/player_character_scene.tscn" id="13_d85sq"]
+[ext_resource type="PackedScene" uid="uid://heagysv2b1sq" path="res://Scene/Alarm.tscn" id="14_miqp1"]
 
 [sub_resource type="Curve" id="Curve_u8nwk"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.12814072, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.6731517), 0.0, 0.0, 0, 0]
@@ -473,13 +474,16 @@ material = ExtResource("7_qcysr")
 [node name="PlayerCharacter" parent="." instance=ExtResource("13_d85sq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.997849, 1.5000005, -20.727295)
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="Test fire gun" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.730635, 0.5783547, -0.8550998)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Test fire gun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0593348, -1.4669929)
 mesh = SubResource("BoxMesh_miqp1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Test fire gun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0593348, -1.4669929)
 shape = SubResource("BoxShape3D_3hddq")
+
+[node name="Test interactor" parent="." instance=ExtResource("14_miqp1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.595875, 1.5000005, 8.44862)

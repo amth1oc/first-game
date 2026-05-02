@@ -134,15 +134,15 @@ func _input(event: InputEvent) -> void:
 			weapons_manager.switch_to_previous_weapon()
 		if event.is_action_pressed("throw_weapon"):
 			weapons_manager.throw_current_weapon(weapons_manager.get_throw_direction())
-
-	if event.is_action_pressed("interact"):
-		var interact_ray = $Camera/CameraRaycasts/InteractRay
-		if interact_ray.is_colliding():
-			var target = interact_ray.get_collider()
-			if target.has_method("get_weapon_data"):
-				var new_data = target.get_weapon_data()
-				if weapons_manager.pickup_weapon(new_data):
-					target.queue_free()
+####################xóa nó vì giờ đã có cánh tay là Interactor làm nhiệm vụ này rồi
+	#if event.is_action_pressed("interact"):
+	#	var interact_ray = $Camera/CameraRaycasts/InteractRay
+	#	if interact_ray.is_colliding():
+	#		var target = interact_ray.get_collider()
+	#		if target.has_method("get_weapon_data"):
+	#			var new_data = target.get_weapon_data()
+	#			if weapons_manager.pickup_weapon(new_data):
+	#				target.queue_free()
 
 func apply_camera_recoil(recoil_data: WeaponData) -> void:
 	var pitch = -abs(deg_to_rad(recoil_data.recoil_rotation_degrees.x)) * recoil_data.recoil_impact_multiplier
@@ -154,8 +154,7 @@ func apply_camera_recoil(recoil_data: WeaponData) -> void:
 func zoom() -> void:
 	if Input.is_action_pressed(zoom_action):
 		camera.fov = lerp(camera.fov, zoom_val, zoom_duration)
-	else:
-		camera.fov = lerp(camera.fov, fov, zoom_duration)
+
 
 func mouse_mode() -> void:
 	if Input.is_action_just_pressed(mouse_mode_action):
@@ -163,3 +162,49 @@ func mouse_mode() -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func change_fov() -> void:
+	#for state related fov change requests
+	#if zoom is occuring, pass the rest of the function
+	if zoom_has_occured:
+		return
+	
+	#manage the fov changes relative to a specific state
+	state = play_char.state_machine.curr_state_name
+	
+	camera.fov = clamp(camera.fov, min_fov_val, max_fov_val)
+	
+	var fov_change_tween : Tween = get_tree().create_tween()
+	
+	if !zoom_on and !zoom_has_occured:
+		if state != null and state != "Jump" and state != "Inair" and state != "Wallrun":
+			fov_change_tween.tween_property(camera, "fov", cam_fov_per_state[state][0], cam_fov_per_state[state][1])
+			fov_change_tween.finished.connect(Callable(fov_change_tween, "kill"))
+		else:
+			#default value used for case like this one, when you need to force a fov change for a state that doesn't have his own setted fov
+			if state != "Jump" and state != "Inair" and state != "Wallrun":
+				fov_change_tween.tween_property(camera, "fov", cam_fov_per_state["Default"][0], cam_fov_per_state["Default"][1])
+				fov_change_tween.finished.connect(Callable(fov_change_tween, "kill"))
+			else:
+				#not a great piece of code, but that's the most effective and simple way a found to solve the issue
+				#that if you dezoom while being in Jump in Inair state, since these two states doesn't have a fixed fov
+				#the fov would go back to the default one, even if play char jump with the Run state fov
+				
+				var walk_or_run_state : String
+				if play_char.walk_or_run == "WalkState":
+					walk_or_run_state = "Walk"
+				if play_char.walk_or_run == "RunState":
+					if (play_char.velocity.x < 1.0 and play_char.velocity.x > -1.0 and play_char.velocity.z < 1.0 and play_char.velocity.z > -1.0): #play char not moving at all on x and z axis
+						walk_or_run_state = "Walk"
+					else:
+						walk_or_run_state = "Run"
+						
+				fov_change_tween.tween_property(camera, "fov", cam_fov_per_state[walk_or_run_state][0], cam_fov_per_state[walk_or_run_state][1])
+				fov_change_tween.finished.connect(Callable(fov_change_tween, "kill"))
+				
+	#doesn't set zoom boolean to false right now, because we want the zoom to occur whatever the current state of play char is
+	if zoom_on and !zoom_has_occured:
+		zoom_has_occured = true
+		fov_change_tween.tween_property(camera, "fov", camera.fov - zoom_val, zoom_duration)
+		fov_change_tween.finished.connect(Callable(fov_change_tween, "kill"))
+		

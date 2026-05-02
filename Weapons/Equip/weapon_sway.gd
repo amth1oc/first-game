@@ -20,13 +20,20 @@ func _ready() -> void:
 	initial_position = position
 	initial_rotation = rotation
 	
-	if not player:
-		# Chờ 1 frame
-		await get_tree().process_frame
-		
-		# Lấy trực tiếp shooter_body từ WeaponManager truyền xuống
-		if owner and "shooter_body" in owner and owner.shooter_body:
-			player = owner.shooter_body
+#	if not player:
+#		# Chờ 1 frame
+#		await get_tree().process_frame
+#		
+#		# Lấy trực tiếp shooter_body từ WeaponManager truyền xuống
+#		if owner and "shooter_body" in owner and owner.shooter_body:
+#			player = owner.shooter_body
+##############fixx để kết nối với character3D luôn
+###tránh trường hợp chờ 1 frame mà dẫn đến lỗi 
+## bây giờ thì biến shooter_body(từ Weapon manager) chủ động hơn 
+##nó không chờ mà đưa dữ liệu xuống cho weapon_sway
+func set_player(body: Node3D) -> void:
+	player = body
+
 #######################đã fixx độ giật nhẹ lên trên
 func apply_recoil(data: WeaponData) -> void:
 	# --- POSITION RECOIL ---
@@ -47,8 +54,9 @@ func apply_recoil(data: WeaponData) -> void:
 
 	recoil_recovery_speed = data.recovery_speed
 	
-	
-	
+
+
+
 	
 func _process(delta: float) -> void:
 	if not player: return

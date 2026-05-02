@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=32 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
 [ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
 [ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
+[ext_resource type="Script" uid="uid://cmstbm14b0qsu" path="res://PlayerCharacter/Interaction/interactor.gd" id="18_1dajo"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
 [ext_resource type="Script" uid="uid://sca7ypsol83f" path="res://addons/PlayerCharacter/StateMachine/state_machine_script.gd" id="54_e0r17"]
 [ext_resource type="Script" uid="uid://stil4xkf3tk0" path="res://addons/PlayerCharacter/StateMachine/idle_state_script.gd" id="55_dayh2"]
@@ -113,6 +114,7 @@ script = ExtResource("12_5fuve")
 metadata/_custom_type_script = "uid://bq1stj2mujnp2"
 
 [node name="CameraHolder" type="Node3D" parent="." node_paths=PackedStringArray("weapons_manager")]
+unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.715, 0)
 script = ExtResource("2_x12n0")
 weapons_manager = NodePath("Camera/WeaponManager")
@@ -158,6 +160,10 @@ target_position = Vector3(0, 0, -100)
 
 [node name="InteractRay" type="RayCast3D" parent="CameraHolder/Camera/CameraRaycasts"]
 target_position = Vector3(0, 0, -2.5)
+
+[node name="Interactor" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("interact_ray")]
+script = ExtResource("18_1dajo")
+interact_ray = NodePath("../CameraRaycasts/InteractRay")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5yjma")

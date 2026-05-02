@@ -3,6 +3,7 @@ class_name WeaponIdleState
 
 @export var fire_state: Node
 @export var reload_state: Node
+@export var inspect_state: Node
 
 func handle_action(action: String) -> void:
 	if action == "fire" and fire_state:
@@ -22,3 +23,6 @@ func handle_action(action: String) -> void:
 		
 		if not is_mag_full and has_spare_ammo:
 			state_machine.change_state(reload_state)
+			
+	elif action == "inspect" and inspect_state:  
+		state_machine.change_state(inspect_state)
