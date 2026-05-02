@@ -6,7 +6,14 @@ extends Node3D
 @export var tracer_scene: PackedScene
 @export var decal_scene: PackedScene
 ###thêm animation player
-@onready var anim_player: AnimationPlayer = $AnimationPlayerReload
+#@onready var anim_player: AnimationPlayer = $AnimationPlayerReload
+var anim_player: AnimationPlayer = null
+
+func _ready() -> void:
+	# Tìm AnimationPlayer nếu có, không có thì bỏ qua (enemy không cần)
+	if has_node("AnimationPlayerReload"):
+		anim_player = get_node("AnimationPlayerReload")
+
 
 
 # Biến tạm để lưu dữ liệu mục tiêu khi người chơi bấm bắn
@@ -34,9 +41,18 @@ func fire_weapon(hit_result: Dictionary) -> void:
 	weapon_data.current_magazine_ammo -= 1
 	
 	# 2. Gameplay Layer (Trừ máu, áp dụng lực đẩy)
+	#if hit_result.hit and hit_result.collider.has_method("take_damage"):
+	#	hit_result.collider.take_damage(weapon_data.damage)
+	
+		# 2. Gameplay Layer (Trừ máu, áp dụng lực đẩy)
 	if hit_result.hit and hit_result.collider.has_method("take_damage"):
-		hit_result.collider.take_damage(weapon_data.damage)
-		
+		# Faction check: không bắn cùng phe
+		var my_faction = _get_faction(shooter_body)
+		var target_faction = _get_faction(hit_result.collider)
+		if my_faction != target_faction or my_faction == "":
+			hit_result.collider.take_damage(weapon_data.damage, shooter_body)
+
+	
 	# Nếu bắn trúng vật lý RigidBody
 	if hit_result.hit and hit_result.collider is RigidBody3D:
 		var force_dir = (hit_result.point - muzzle_point.global_position).normalized()
@@ -99,3 +115,12 @@ func spawn_decal(pos: Vector3, normal: Vector3, parent: Node) -> void:
 	
 	# Gắn góc xoay mới
 	decal.global_transform.basis = Basis(right_dir, up_dir, forward_dir)
+
+func _get_faction(node: Node) -> String:
+	if node == null:
+		return ""
+	if node.is_in_group("player_faction"):
+		return "player"
+	if node.is_in_group("enemy_faction"):
+		return "enemy"
+	return ""

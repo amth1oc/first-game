@@ -169,6 +169,8 @@ var default_input_actions : Dictionary
 @onready var right_wall_check : RayCast3D = %RightWallCheck
 
 func _ready() -> void:
+	###### thêm vào player group
+	add_to_group("player_faction")
 	#set and value references
 	hit_ground_cooldown_ref = hit_ground_cooldown
 	jump_cooldown_ref = jump_cooldown
@@ -327,3 +329,7 @@ func tween_model_height(state_model_height : float) -> void:
 		model_tween.tween_interval(0.1)
 	model_tween.finished.connect(Callable(model_tween, "kill"))
 		
+		
+func take_damage(amount: int, _shooter = null) -> void:
+	print("Player nhận %d damage!" % amount)
+	# TODO: thêm HP/health system sau

@@ -50,6 +50,12 @@ var is_reloading: bool = false
 # @export var projectile_scene: PackedScene
 @export var projectile_launch_force: float = 20.0
 
+@export_category("AI Behavior")
+@export var ai_fire_accuracy: float = 0.9   # 0.0 = bắn lung tung, 1.0 = chính xác tuyệt đối
+@export var ai_detection_range: float = 30.0  # bán kính phát hiện player (mét)
+@export var ai_attack_range: float = 25.0     # khoảng cách tối đa để bắn
+
+
 # @export_group("Visuals")
 # @export var crosshair_data: CrosshairData
 

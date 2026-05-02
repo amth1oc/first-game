@@ -1,0 +1,81 @@
+[gd_scene load_steps=13 format=3 uid="uid://dg1qth8d6vfi7"]
+
+[ext_resource type="Script" uid="uid://dwgtdxorrga20" path="res://Enemy/enemy_controller.gd" id="1_oc30w"]
+[ext_resource type="Resource" uid="uid://cph2ni0fjsbc2" path="res://Weapons/Definitions/enemy_revolver_data.tres" id="2_bqk24"]
+[ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="2_l35bb"]
+[ext_resource type="Script" uid="uid://laiqldncu67t" path="res://Enemy/enemy_state_machine.gd" id="3_bqk24"]
+[ext_resource type="Script" uid="uid://dtgrtcl23n4v5" path="res://Enemy/states/enemy_wander_state.gd" id="4_yiywh"]
+[ext_resource type="Script" uid="uid://crmnyakrdbfw8" path="res://Enemy/states/enemy_alert_state.gd" id="5_drvfl"]
+[ext_resource type="Script" uid="uid://b6vfwqy386jx4" path="res://Enemy/states/enemy_combat_state.gd" id="6_7lrq3"]
+[ext_resource type="Script" uid="uid://k0y5lrngyms4" path="res://Enemy/states/enemy_reload_state.gd" id="7_prx6m"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y6ecd"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qmtu6"]
+albedo_color = Color(1, 0.23000002, 0.23000002, 1)
+emission_enabled = true
+emission = Color(1, 0.14999998, 0.20666659, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6trkl"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rvcw3"]
+radius = 100.0
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 4
+script = ExtResource("1_oc30w")
+weapon_data_resource = ExtResource("2_bqk24")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y6ecd")
+
+[node name="EnemyMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_qmtu6")
+mesh = SubResource("CapsuleMesh_6trkl")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+
+[node name="AimRay" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -100)
+collision_mask = 2
+
+[node name="DetectionArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_rvcw3")
+
+[node name="WeaponAnchor" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.3, 0.9, -0.3)
+
+[node name="WeaponManager" type="Node3D" parent="WeaponAnchor"]
+script = ExtResource("2_l35bb")
+
+[node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_bqk24")
+initial_state = NodePath("WanderState")
+
+[node name="WanderState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("alert_state")]
+script = ExtResource("4_yiywh")
+alert_state = NodePath("../AlertState")
+
+[node name="AlertState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("combat_state", "wander_state")]
+script = ExtResource("5_drvfl")
+combat_state = NodePath("../CombatState")
+wander_state = NodePath("../WanderState")
+
+[node name="CombatState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("reload_state", "alert_state")]
+script = ExtResource("6_7lrq3")
+reload_state = NodePath("../ReloadState")
+alert_state = NodePath("../AlertState")
+
+[node name="ReloadState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("combat_state", "alert_state")]
+script = ExtResource("7_prx6m")
+combat_state = NodePath("../CombatState")
+alert_state = NodePath("../AlertState")

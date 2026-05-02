@@ -1,0 +1,51 @@
+[gd_scene load_steps=13 format=3 uid="uid://ylj5r7jscjhq"]
+
+[ext_resource type="Script" uid="uid://bvcaxvstd2cdt" path="res://Weapons/Equip/WeaponEquipped.gd" id="1_ibj0j"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_5oyuk"]
+[ext_resource type="PackedScene" uid="uid://dfqski22nyhod" path="res://Bullet/Scene/tracer.tscn" id="2_lish8"]
+[ext_resource type="PackedScene" uid="uid://12rt3qymk8hn" path="res://Bullet/Scene/bullet_decal.tscn" id="3_5oyuk"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="4_7i8ci"]
+[ext_resource type="ArrayMesh" uid="uid://c5g2y3g1kcwt8" path="res://Addons Weapons/Weapon Models/Guns/Pistols/Pistol2/mesh_pistol2.res" id="5_t417v"]
+[ext_resource type="Script" uid="uid://csn58hq4mn332" path="res://Weapons/StateMachine/weapon_state_machine.gd" id="6_ngorx"]
+[ext_resource type="Script" uid="uid://dmw46cycgbgw4" path="res://Weapons/StateMachine/weapon_idle_state.gd" id="7_33w2o"]
+[ext_resource type="Script" uid="uid://bfehekwed35nf" path="res://Weapons/StateMachine/weapon_fire_state.gd" id="8_336ms"]
+[ext_resource type="Script" uid="uid://cvihgo52vdyt" path="res://Weapons/StateMachine/weapon_reload_state.gd" id="9_mpqai"]
+
+[sub_resource type="Resource" id="Resource_7i8ci"]
+script = ExtResource("2_5oyuk")
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxxbn"]
+albedo_texture = ExtResource("4_7i8ci")
+
+[node name="RevolverEnemy" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+script = ExtResource("1_ibj0j")
+weapon_data = SubResource("Resource_7i8ci")
+muzzle_point = NodePath("MuzzlePoint")
+tracer_scene = ExtResource("2_lish8")
+decal_scene = ExtResource("3_5oyuk")
+
+[node name="Pistol_Mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_mxxbn")
+mesh = ExtResource("5_t417v")
+
+[node name="MuzzlePoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002, 0.007)
+
+[node name="WeaponStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_ngorx")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("fire_state", "reload_state")]
+script = ExtResource("7_33w2o")
+fire_state = NodePath("../Fire")
+reload_state = NodePath("../Reload")
+
+[node name="Fire" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("8_336ms")
+idle_state = NodePath("../Idle")
+
+[node name="Reload" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("9_mpqai")
+idle_state = NodePath("../Idle")
