@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bvcaxvstd2cdt" path="res://Weapons/Equip/WeaponEquipped.gd" id="1_lpnt7"]
 [ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="1_yut3m"]
 [ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="2_ahfys"]
-[ext_resource type="ArrayMesh" uid="uid://c5g2y3g1kcwt8" path="res://Addons Weapons/Weapon Models/Guns/Pistols/Pistol2/mesh_pistol2.res" id="2_i53ok"]
+[ext_resource type="ArrayMesh" uid="uid://di2rgmljbko48" path="res://Addons Weapons/Weapon Models/Guns/Pistols/Pistol2/mesh_pistol2.res" id="2_i53ok"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_qmqkn"]
 [ext_resource type="Script" uid="uid://glt7j2liakyo" path="res://Weapons/Equip/weapon_sway.gd" id="2_yhocf"]
 [ext_resource type="PackedScene" uid="uid://dfqski22nyhod" path="res://Bullet/Scene/tracer.tscn" id="3_jfxsp"]

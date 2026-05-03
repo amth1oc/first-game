@@ -1,52 +1,21 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0rdfn846hwi7"]
+[gd_scene load_steps=15 format=3 uid="uid://c0rdfn846hwi7"]
 
-[ext_resource type="Script" uid="uid://bvcaxvstd2cdt" path="res://Weapons/Equip/WeaponEquipped.gd" id="1_e13dy"]
+[ext_resource type="Script" uid="uid://jd1ibanjcokh" path="res://Bullet/Scene/MeleeEquipped.gd" id="1_06djx"]
 [ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="2_77b7o"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="3_ql2ml"]
-[ext_resource type="PackedScene" uid="uid://dfqski22nyhod" path="res://Bullet/Scene/tracer.tscn" id="4_4c0sq"]
-[ext_resource type="PackedScene" uid="uid://12rt3qymk8hn" path="res://Bullet/Scene/bullet_decal.tscn" id="5_8w8dq"]
+[ext_resource type="Script" uid="uid://b37dw37lgr50k" path="res://Weapons/Knife equipped/melee_idle_state.gd" id="6_06djx"]
 [ext_resource type="Script" uid="uid://glt7j2liakyo" path="res://Weapons/Equip/weapon_sway.gd" id="6_lt33d"]
 [ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="7_5fbkg"]
+[ext_resource type="Script" uid="uid://chq5ihv6aqp3m" path="res://Weapons/Knife equipped/melee_attack_state.gd" id="7_06djx"]
 [ext_resource type="ArrayMesh" uid="uid://hq8qixjtu887" path="res://Addons Weapons/Weapon Models/Melee/Knive/Knive3/Plane02_001.res" id="8_jnmla"]
 [ext_resource type="Script" uid="uid://csn58hq4mn332" path="res://Weapons/StateMachine/weapon_state_machine.gd" id="9_ybn5o"]
-[ext_resource type="Script" uid="uid://dmw46cycgbgw4" path="res://Weapons/StateMachine/weapon_idle_state.gd" id="10_pxkcd"]
-[ext_resource type="Script" uid="uid://bfehekwed35nf" path="res://Weapons/StateMachine/weapon_fire_state.gd" id="11_yl5da"]
-[ext_resource type="Script" uid="uid://b4vbjm2nd4sln" path="res://Bullet/Scene/weapon_inspect_state.gd" id="13_iv50s"]
 
-[sub_resource type="Resource" id="Resource_gx0v3"]
+[sub_resource type="Resource" id="Resource_pia4o"]
 script = ExtResource("3_ql2ml")
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e13dy"]
 albedo_texture = ExtResource("7_5fbkg")
-
-[sub_resource type="Animation" id="Animation_jnmla"]
-resource_name = "fire"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model_Holder:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.5),
-"transitions": PackedFloat32Array(0.25881627, 0.25881627, 0.39229202),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.01), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Model_Holder:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.5),
-"transitions": PackedFloat32Array(0.25881627, 0.25881627, 0.39229202),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.3962634, 0, 0), Vector3(0, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_e13dy"]
 length = 0.001
@@ -75,6 +44,34 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_jnmla"]
+resource_name = "fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.25881627, 0.25881627, 0.39229202),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.001, 0.01), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.25881627, 0.25881627, 0.39229202),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5707964, 0, 0.2617994), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_77b7o"]
 _data = {
 &"RESET": SubResource("Animation_e13dy"),
@@ -82,18 +79,17 @@ _data = {
 }
 
 [node name="KnifeEquipped" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
-transform = Transform3D(39.999996, 0, 0, 0, -20.000002, 34.641014, 0, -34.641014, -20.000002, 0, 0, 0)
-script = ExtResource("1_e13dy")
-weapon_data = SubResource("Resource_gx0v3")
+transform = Transform3D(39.999996, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+script = ExtResource("1_06djx")
+weapon_data = SubResource("Resource_pia4o")
 muzzle_point = NodePath("Model_Holder/MuzzlePoint")
-tracer_scene = ExtResource("4_4c0sq")
-decal_scene = ExtResource("5_8w8dq")
 
 [node name="Model_Holder" type="Node3D" parent="."]
-transform = Transform3D(1.0000001, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("6_lt33d")
 
 [node name="KnifeMesh" type="MeshInstance3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, -0.9999999, -8.742277e-08, 0, 8.742277e-08, -0.9999999, 0, -0.003, 0.003)
 material_override = SubResource("StandardMaterial3D_e13dy")
 mesh = ExtResource("8_jnmla")
 
@@ -104,19 +100,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00624386, 0.0021902286)
 script = ExtResource("9_ybn5o")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("fire_state", "reload_state", "inspect_state")]
-script = ExtResource("10_pxkcd")
-fire_state = NodePath("../Attack")
-reload_state = NodePath("")
-inspect_state = NodePath("../Inspect")
+[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("6_06djx")
+attack_state = NodePath("../Attack")
 
 [node name="Attack" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("11_yl5da")
+script = ExtResource("7_06djx")
 idle_state = NodePath("../Idle")
 
-[node name="Inspect" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("13_iv50s")
-idle_state = NodePath("../Idle")
+[node name="Inspect" type="Node" parent="WeaponStateMachine"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

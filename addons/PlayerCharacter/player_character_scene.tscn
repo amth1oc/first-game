@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=35 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
 [ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
 [ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
+[ext_resource type="Resource" uid="uid://gl7jve1tw1pu" path="res://Weapons/Definitions/knife_data.tres" id="17_w05lp"]
 [ext_resource type="Script" uid="uid://cmstbm14b0qsu" path="res://PlayerCharacter/Interaction/interactor.gd" id="18_1dajo"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
 [ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="24_671bg"]
@@ -150,7 +151,7 @@ debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
 [node name="WeaponManager" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("shooter_body", "aim_ray")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.666, -0.304, -0.409)
 script = ExtResource("14_dp0tn")
-weapon_data_array = Array[ExtResource("15_1dajo")]([ExtResource("16_ifmfs")])
+weapon_data_array = Array[ExtResource("15_1dajo")]([ExtResource("16_ifmfs"), ExtResource("17_w05lp")])
 shooter_body = NodePath("../../..")
 aim_ray = NodePath("../CameraRaycasts/AimRay")
 
@@ -234,6 +235,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("16_gfbru")
+expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
 offset_right = 295.0

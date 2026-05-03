@@ -1,16 +1,31 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=5 format=3 uid="uid://gl7jve1tw1pu"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=9 format=3 uid="uid://gl7jve1tw1pu"]
 
 [ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_h7u8n"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_2q43n"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_fuvh6"]
+[ext_resource type="PackedScene" uid="uid://c67u6018b3g51" path="res://VFX Addons/HitImpacts/VFXScenes/impact_blood.tscn" id="3_0rrw5"]
 [ext_resource type="PackedScene" uid="uid://cx86yxxfyxxu2" path="res://Weapons/Definitions/knife_pickup.tscn" id="3_2q43n"]
 [ext_resource type="PackedScene" uid="uid://c0rdfn846hwi7" path="res://Bullet/Scene/KnifeEquipped.tscn" id="3_sv6nw"]
+
+[sub_resource type="Resource" id="Resource_t8fxj"]
+script = ExtResource("1_h7u8n")
+impact_scene = ExtResource("2_fuvh6")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[sub_resource type="Resource" id="Resource_uocim"]
+script = ExtResource("1_h7u8n")
+surface_tag = "flesh"
+impact_scene = ExtResource("3_0rrw5")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
 
 [resource]
 script = ExtResource("2_2q43n")
 weapon_name = "Knife"
 weapon_equipped_scene = ExtResource("3_sv6nw")
 weapon_pickup_scene = ExtResource("3_2q43n")
+reload_time = 1.0
 uses_ammo = false
 damage = 50
 fire_rate = 120.0
+impacts = Array[ExtResource("1_h7u8n")]([SubResource("Resource_t8fxj"), SubResource("Resource_uocim")])
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

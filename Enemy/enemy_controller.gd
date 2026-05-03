@@ -59,7 +59,7 @@ func navigate_to_target(delta: float) -> void:
 	var dir = (next_pos - global_position).normalized()
 	velocity.x = dir.x * move_speed
 	velocity.z = dir.z * move_speed
-	print("Moving toward: ", next_pos, " vel: ", velocity)  # debug
+	#print("Moving toward: ", next_pos, " vel: ", velocity)  # debug
 	
 
 func strafe_around_player(delta: float) -> void:

@@ -35,4 +35,4 @@ func _pick_new_wander_target() -> void:
 	)
 	var new_target = enemy.global_position + random_offset
 	enemy.navigation_agent.target_position = new_target
-	print("Wander target set: ", new_target)  # debug
+	#print("Wander target set: ", new_target)  # debug
