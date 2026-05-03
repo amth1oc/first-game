@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://cph2ni0fjsbc2"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=4 format=3 uid="uid://cph2ni0fjsbc2"]
 
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_56l72"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="1_qvb8w"]
 [ext_resource type="PackedScene" uid="uid://ylj5r7jscjhq" path="res://Scene/Revolver_Enemy.tscn" id="2_r37wa"]
 

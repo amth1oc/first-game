@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://pqugt41pxbmx"]
+
+[ext_resource type="Script" uid="uid://do4fnl8wtv5te" path="res://Weapons/Definitions/muzzle_flash.gd" id="1_sfvwj"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1tyso"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsplm"]
+transparency = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.9718891, 0.68254393, 3.85046e-07, 1)
+emission_energy_multiplier = 5.0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_lw7e0"]
+material = SubResource("StandardMaterial3D_lsplm")
+
+[node name="MuzzleFlash" type="Node3D"]
+script = ExtResource("1_sfvwj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_1tyso")
+draw_pass_1 = SubResource("QuadMesh_lw7e0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.8979521, 0.5445046, 0.07174695, 1)
+light_energy = 4.0

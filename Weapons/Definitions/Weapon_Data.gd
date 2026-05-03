@@ -27,8 +27,9 @@ var is_reloading: bool = false
 @export_category("Feel")
 @export var recovery_speed: float = 7.0
 # We will create WeaponImpact and CrosshairData resources later
-# @export var impacts: Array[WeaponImpact]
-# @export var muzzle_flash_scene: PackedScene
+@export_category("VFX")
+@export var impacts: Array[WeaponImpact]
+@export var muzzle_flash_scene: PackedScene
 
 @export_category("Recoil")
 @export var recoil_kickback: float = 0.1

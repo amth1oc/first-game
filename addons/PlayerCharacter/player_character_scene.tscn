@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=34 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -9,13 +9,15 @@
 [ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="14_dp0tn"]
 [ext_resource type="LabelSettings" uid="uid://bs0stms0b56kp" path="res://addons/Arts/label_settings.tres" id="14_gfbru"]
 [ext_resource type="Shader" uid="uid://b34228uop3gdf" path="res://addons/PlayerCharacter/Shaders/speed_lines_shader.gdshader" id="14_jv0i6"]
-[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="15_pp6m3"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="15_1dajo"]
 [ext_resource type="Script" uid="uid://dx02l6p6behb8" path="res://addons/PlayerCharacter/UI/hud_script.gd" id="16_5jm78"]
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
 [ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
 [ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
 [ext_resource type="Script" uid="uid://cmstbm14b0qsu" path="res://PlayerCharacter/Interaction/interactor.gd" id="18_1dajo"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
+[ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="24_671bg"]
+[ext_resource type="PackedScene" uid="uid://cakaviw8kp11b" path="res://Scene/hud_ui.tscn" id="24_u7t1t"]
 [ext_resource type="Script" uid="uid://sca7ypsol83f" path="res://addons/PlayerCharacter/StateMachine/state_machine_script.gd" id="54_e0r17"]
 [ext_resource type="Script" uid="uid://stil4xkf3tk0" path="res://addons/PlayerCharacter/StateMachine/idle_state_script.gd" id="55_dayh2"]
 [ext_resource type="Script" uid="uid://blt7dest23fk0" path="res://addons/PlayerCharacter/StateMachine/walk_state_script.gd" id="56_w3td4"]
@@ -148,12 +150,13 @@ debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
 [node name="WeaponManager" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("shooter_body", "aim_ray")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.666, -0.304, -0.409)
 script = ExtResource("14_dp0tn")
-weapon_data_array = Array[ExtResource("15_pp6m3")]([ExtResource("16_ifmfs")])
+weapon_data_array = Array[ExtResource("15_1dajo")]([ExtResource("16_ifmfs")])
 shooter_body = NodePath("../../..")
 aim_ray = NodePath("../CameraRaycasts/AimRay")
 
-[node name="CameraRaycasts" type="Node3D" parent="CameraHolder/Camera"]
+[node name="CameraRaycasts" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("hud_ui")]
 script = ExtResource("17_ifmfs")
+hud_ui = NodePath("../../../HUD_UI")
 
 [node name="AimRay" type="RayCast3D" parent="CameraHolder/Camera/CameraRaycasts"]
 target_position = Vector3(0, 0, -100)
@@ -592,6 +595,7 @@ layout_mode = 2
 [node name="FramesPerSecondLabel" type="Label" parent="HUD/MarginContainer2/PanelContainer/PlayCharInfos2/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
+theme_override_fonts/font = ExtResource("24_671bg")
 theme_override_font_sizes/font_size = 40
 text = "Frames per seconds : "
 label_settings = ExtResource("14_gfbru")
@@ -604,9 +608,12 @@ layout_mode = 2
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
+theme_override_fonts/font = ExtResource("24_671bg")
 theme_override_font_sizes/font_size = 40
 text = "....."
 label_settings = ExtResource("14_gfbru")
 vertical_alignment = 1
+
+[node name="HUD_UI" parent="." instance=ExtResource("24_u7t1t")]
 
 [connection signal="change_fov" from="StateMachine" to="CameraHolder" method="change_fov"]

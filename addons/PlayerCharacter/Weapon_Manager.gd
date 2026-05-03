@@ -2,6 +2,10 @@
 class_name WeaponManager
 extends Node3D
 
+#signal
+signal weapon_changed(weapon_data: WeaponData)
+signal ammo_updated(current_mag: int, total_ammo: int)
+
 # Exports
 # This is where we will drag-and-drop our WeaponData resources in the Inspector.
 @export var weapon_data_array: Array[WeaponData]
@@ -42,6 +46,9 @@ func _initialize_all_weapons() -> void:
 
 	for weapon_data in weapon_data_array:
 		if weapon_data and weapon_data.weapon_equipped_scene:
+			# Súng mặc định của player lúc mới Start game sẽ được nạp đầy đạn ở đây:
+			weapon_data.initialize_ammo()
+			
 			# Create an instance of the weapon's equipped scene
 			var weapon_instance = weapon_data.weapon_equipped_scene.instantiate()
 			weapon_instance.shooter_body = shooter_body
@@ -89,6 +96,11 @@ func switch_weapon(index: int) -> void:
 
 	if current_weapon_instance:
 		current_weapon_instance.visible = true
+		############ hud.ui
+		weapon_changed.emit(weapon_data_array[index])
+		# Báo luôn số đạn lúc vừa đổi súng
+		ammo_updated.emit(weapon_data_array[index].current_magazine_ammo, weapon_data_array[index].total_ammo)
+
 		current_weapon_instance.set_process_mode(Node.PROCESS_MODE_INHERIT)
 		print("WeaponManager: Switched to weapon %s" % current_weapon_instance.name)
 	else:
@@ -232,6 +244,12 @@ func remove_current_weapon() -> void:
 	
 	if not weapon_data_array.is_empty():
 		switch_weapon(0)
+	else:
+		# Báo cho HUD xóa chữ tên súng và số đạn về 0
+		if shooter_body and shooter_body.hud_ui:
+			shooter_body.hud_ui.update_weapon(null)
+			shooter_body.hud_ui.update_ammo(0, 0)
+			
 # This function adds a new weapon to our inventory.
 # It will be called by our interaction system in a future tutorial.
 func pickup_weapon(new_weapon_data: WeaponData) -> bool:

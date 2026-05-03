@@ -2,6 +2,13 @@ extends CharacterBody3D
 
 class_name PlayerCharacter
 
+signal health_changed(current, max)
+
+@export_group("Health")
+@export var max_health: int = 100
+var current_health: int = 100
+
+
 @export_group("Movement variables")
 var move_speed: float
 var move_accel: float
@@ -161,6 +168,7 @@ var default_input_actions : Dictionary
 @onready var hitbox: CollisionShape3D = $Hitbox
 @onready var state_machine: Node = $StateMachine
 @onready var hud: CanvasLayer = $HUD
+@onready var hud_ui: CanvasLayer = $HUD_UI
 @onready var ceiling_check: RayCast3D = %CeilingCheck
 @onready var floor_check: RayCast3D = %FloorCheck
 @onready var wallrun_floor_check : RayCast3D = %WallrunFloorCheck
@@ -192,6 +200,17 @@ func _ready() -> void:
 	
 	build_default_keybinding()
 	input_actions_check()
+
+	###########Update hud_ui
+	  # Đặt máu mặc định lúc bắt đầu
+	if hud_ui:
+		hud_ui.update_health(current_health, max_health)
+  # Kết nối Signals
+	health_changed.connect(hud_ui.update_health)
+	if weapons_manager and hud_ui:
+		weapons_manager.weapon_changed.connect(hud_ui.update_weapon)
+		weapons_manager.ammo_updated.connect(hud_ui.update_ammo)
+
 
 	
 func build_default_keybinding() -> void:
@@ -331,5 +350,12 @@ func tween_model_height(state_model_height : float) -> void:
 		
 		
 func take_damage(amount: int, _shooter = null) -> void:
-	print("Player nhận %d damage!" % amount)
-	# TODO: thêm HP/health system sau
+	current_health -= amount
+	current_health = clamp(current_health, 0, max_health)
+	health_changed.emit(current_health, max_health)
+	print("Player nhận %d damage! HP: %d" % [amount, current_health])
+	# Gọi hiệu ứng ửng đỏ trên HUD_UI
+	if hud_ui:
+		hud_ui.flash_damage_overlay()
+		print("đã đỏ màn hình")
+	

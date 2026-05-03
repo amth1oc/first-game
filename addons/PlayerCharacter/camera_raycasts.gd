@@ -2,7 +2,7 @@ extends Node3D
 class_name CameraRaycasts
 
 @onready var aim_ray: RayCast3D = $AimRay
-
+@export var hud_ui: CanvasLayer
 func _ready() -> void:
 	# Bỏ qua va chạm với Player (owner của script này phải là root node Player)
 	if owner is PhysicsBody3D:
@@ -13,6 +13,7 @@ func get_hit_result() -> Dictionary:
 	aim_ray.force_raycast_update()
 	
 	if aim_ray.is_colliding():
+	
 		return {
 			"hit": true,
 			"collider": aim_ray.get_collider(),

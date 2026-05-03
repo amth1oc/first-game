@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbi0vlvogoy8i"]
+[gd_scene load_steps=7 format=3 uid="uid://cwgynksjxiox8"]
 
 [ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="1_4i0mo"]
-[ext_resource type="ArrayMesh" uid="uid://c5g2y3g1kcwt8" path="res://Addons Weapons/Weapon Models/Guns/Pistols/Pistol2/mesh_pistol2.res" id="2_xihje"]
+[ext_resource type="ArrayMesh" uid="uid://di2rgmljbko48" path="res://Addons Weapons/Weapon Models/Guns/Pistols/Pistol2/mesh_pistol2.res" id="2_xihje"]
 [ext_resource type="Script" uid="uid://6gx202c8dhof" path="res://Weapons/Definitions/weapon_pickup.gd" id="3_v3p7t"]
 [ext_resource type="Script" uid="uid://cq52pllnofpif" path="res://PlayerCharacter/Interaction/interactable.gd" id="5_v3p7t"]
 

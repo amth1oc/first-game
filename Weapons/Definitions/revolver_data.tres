@@ -1,13 +1,32 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=4 format=3 uid="uid://bntjn4dlwhq16"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=10 format=3 uid="uid://bntjn4dlwhq16"]
 
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_8f5qe"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="1_csqd6"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_76ltf"]
 [ext_resource type="PackedScene" uid="uid://bw5486snk56h1" path="res://Bullet/Scene/Revolver_Equipped.tscn" id="2_rcv3m"]
-[ext_resource type="PackedScene" uid="uid://cbi0vlvogoy8i" path="res://Weapons/Definitions/revolver_pickup.tscn" id="3_3dxjp"]
+[ext_resource type="PackedScene" uid="uid://cwgynksjxiox8" path="res://Weapons/Definitions/revolver_pickup.tscn" id="3_3dxjp"]
+[ext_resource type="PackedScene" uid="uid://c67u6018b3g51" path="res://VFX Addons/HitImpacts/VFXScenes/impact_blood.tscn" id="3_7dciy"]
+[ext_resource type="PackedScene" uid="uid://c5v81v35q16n7" path="res://Weapons/Definitions/muzzle_flash.tscn" id="4_345ik"]
+
+[sub_resource type="Resource" id="Resource_bbld0"]
+script = ExtResource("1_8f5qe")
+impact_scene = ExtResource("2_76ltf")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[sub_resource type="Resource" id="Resource_jbmvy"]
+script = ExtResource("1_8f5qe")
+surface_tag = "flesh"
+impact_scene = ExtResource("3_7dciy")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
 
 [resource]
 script = ExtResource("1_csqd6")
+weapon_name = "Revolver"
 weapon_equipped_scene = ExtResource("2_rcv3m")
 weapon_pickup_scene = ExtResource("3_3dxjp")
 max_magazine_capacity = 6
-max_total_ammo = 12
+max_total_ammo = 30
+impacts = Array[ExtResource("1_8f5qe")]([SubResource("Resource_bbld0"), SubResource("Resource_jbmvy")])
+muzzle_flash_scene = ExtResource("4_345ik")
+ai_fire_accuracy = 0.95
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

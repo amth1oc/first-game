@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx86yxxfyxxu2"]
+
+[ext_resource type="Script" uid="uid://6gx202c8dhof" path="res://Weapons/Definitions/weapon_pickup.gd" id="1_1piyb"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="2_ioy6d"]
+[ext_resource type="ArrayMesh" uid="uid://hq8qixjtu887" path="res://Addons Weapons/Weapon Models/Melee/Knive/Knive3/Plane02_001.res" id="4_1piyb"]
+[ext_resource type="Script" uid="uid://cq52pllnofpif" path="res://PlayerCharacter/Interaction/interactable.gd" id="4_trk7t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ioy6d"]
+albedo_texture = ExtResource("2_ioy6d")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kmd3r"]
+size = Vector3(0.005, 0.013395996, 0.0076745604)
+
+[node name="knife_pickup" type="RigidBody3D"]
+script = ExtResource("1_1piyb")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("4_trk7t")
+interact_name = "Knife"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ioy6d")
+mesh = ExtResource("4_1piyb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0.00063474476, 0.008911142)
+shape = SubResource("BoxShape3D_kmd3r")
+
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

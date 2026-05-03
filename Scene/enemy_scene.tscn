@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dg1qth8d6vfi7"]
+[gd_scene load_steps=14 format=3 uid="uid://dg1qth8d6vfi7"]
 
 [ext_resource type="Script" uid="uid://dwgtdxorrga20" path="res://Enemy/enemy_controller.gd" id="1_oc30w"]
 [ext_resource type="Resource" uid="uid://cph2ni0fjsbc2" path="res://Weapons/Definitions/enemy_revolver_data.tres" id="2_bqk24"]
 [ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="2_l35bb"]
 [ext_resource type="Script" uid="uid://laiqldncu67t" path="res://Enemy/enemy_state_machine.gd" id="3_bqk24"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="4_bqk24"]
 [ext_resource type="Script" uid="uid://dtgrtcl23n4v5" path="res://Enemy/states/enemy_wander_state.gd" id="4_yiywh"]
 [ext_resource type="Script" uid="uid://crmnyakrdbfw8" path="res://Enemy/states/enemy_alert_state.gd" id="5_drvfl"]
 [ext_resource type="Script" uid="uid://b6vfwqy386jx4" path="res://Enemy/states/enemy_combat_state.gd" id="6_7lrq3"]
@@ -22,9 +23,9 @@ emission_energy_multiplier = 2.0
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6trkl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rvcw3"]
-radius = 100.0
+radius = 50.0
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" groups=["surface_flesh"]]
 collision_layer = 4
 script = ExtResource("1_oc30w")
 weapon_data_resource = ExtResource("2_bqk24")
@@ -54,8 +55,11 @@ shape = SubResource("SphereShape3D_rvcw3")
 [node name="WeaponAnchor" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.3, 0.9, -0.3)
 
-[node name="WeaponManager" type="Node3D" parent="WeaponAnchor"]
+[node name="WeaponManager" type="Node3D" parent="WeaponAnchor" node_paths=PackedStringArray("shooter_body", "aim_ray")]
 script = ExtResource("2_l35bb")
+weapon_data_array = Array[ExtResource("4_bqk24")]([ExtResource("2_bqk24")])
+shooter_body = NodePath("../..")
+aim_ray = NodePath("../../AimRay")
 
 [node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_bqk24")

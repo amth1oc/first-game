@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=5 format=3 uid="uid://gl7jve1tw1pu"]
+
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_h7u8n"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_2q43n"]
+[ext_resource type="PackedScene" uid="uid://cx86yxxfyxxu2" path="res://Weapons/Definitions/knife_pickup.tscn" id="3_2q43n"]
+[ext_resource type="PackedScene" uid="uid://c0rdfn846hwi7" path="res://Bullet/Scene/KnifeEquipped.tscn" id="3_sv6nw"]
+
+[resource]
+script = ExtResource("2_2q43n")
+weapon_name = "Knife"
+weapon_equipped_scene = ExtResource("3_sv6nw")
+weapon_pickup_scene = ExtResource("3_2q43n")
+uses_ammo = false
+damage = 50
+fire_rate = 120.0
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

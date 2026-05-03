@@ -1,0 +1,122 @@
+[gd_scene load_steps=13 format=3 uid="uid://cakaviw8kp11b"]
+
+[ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="1_pheos"]
+[ext_resource type="Script" uid="uid://bpc6inh3ussp" path="res://Scene/hud_ui.gd" id="1_w4kbu"]
+[ext_resource type="Shader" uid="uid://ccaajnlwi3ygh" path="res://VFX/Shaders/hud_ui.gdshader" id="3_xlfnr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egvvm"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 0.6039216)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_f46bi"]
+font = ExtResource("1_pheos")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_q6a1o"]
+font = ExtResource("1_pheos")
+font_size = 48
+font_color = Color(1, 0.6262874, 0.30715427, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f46bi"]
+bg_color = Color(0.07, 0.07, 0.07, 0.6039216)
+
+[sub_resource type="LabelSettings" id="LabelSettings_w4kbu"]
+font = ExtResource("1_pheos")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q6a1o"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 0.6039216)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2p0bk"]
+bg_color = Color(0, 0.73, 0.19466665, 0.84705883)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2p0bk"]
+font = ExtResource("1_pheos")
+shadow_size = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f46bi"]
+shader = ExtResource("3_xlfnr")
+shader_parameter/vignette_softness = 0.5
+
+[node name="HUD_UI" type="CanvasLayer"]
+script = ExtResource("1_w4kbu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+metadata/_edit_use_anchors_ = true
+
+[node name="AmmoPanel" type="Panel" parent="MarginContainer"]
+custom_minimum_size = Vector2(185, 95)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_egvvm")
+
+[node name="WeaponUI" type="VBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 4
+
+[node name="WeaponName" type="Label" parent="MarginContainer/WeaponUI"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_f46bi")
+horizontal_alignment = 2
+
+[node name="AmmoCount" type="Label" parent="MarginContainer/WeaponUI"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_q6a1o")
+horizontal_alignment = 2
+
+[node name="HealthContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 0
+
+[node name="HealthLabel" type="Label" parent="MarginContainer/HealthContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_f46bi")
+text = " HEALTH"
+label_settings = SubResource("LabelSettings_w4kbu")
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/HealthContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_q6a1o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2p0bk")
+value = 100.0
+show_percentage = false
+
+[node name="InteractPrompt" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+label_settings = SubResource("LabelSettings_2p0bk")
+
+[node name="DamageOverlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_f46bi")
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.19, 0.21699995, 0)

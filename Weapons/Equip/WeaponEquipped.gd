@@ -1,5 +1,5 @@
 extends Node3D
-# Script này gắn ở Node ngoài cùng của Scene vũ khí (vd: RevolverEquipped)
+#Node RevolverEquipped
 
 @export var weapon_data: WeaponData # Resource WeaponData
 @export var muzzle_point: Marker3D
@@ -34,12 +34,17 @@ var shooter_body: Node3D:
 func set_weapon_data(data: WeaponData) -> void:
 	weapon_data = data
 	# Khởi tạo băng đạn đầy khi mới nhặt/spawn súng
-	weapon_data.initialize_ammo()
+	# không nên vì khi drop súng và nhặt súng thì phải như nhau
+	#việc nạp đạn khi mới bắt đầu game sẽ chuyển cho WeaponManager
+	#weapon_data.initialize_ammo()
 
 func fire_weapon(hit_result: Dictionary) -> void:
 	# 1. Logic Hệ Thống
 	weapon_data.current_magazine_ammo -= 1
-	
+	#############hud.ui
+	if shooter_body and shooter_body.weapons_manager:
+		shooter_body.weapons_manager.ammo_updated.emit(weapon_data.current_magazine_ammo, weapon_data.total_ammo)
+
 	# 2. Gameplay Layer (Trừ máu, áp dụng lực đẩy)
 	#if hit_result.hit and hit_result.collider.has_method("take_damage"):
 	#	hit_result.collider.take_damage(weapon_data.damage)
@@ -59,8 +64,11 @@ func fire_weapon(hit_result: Dictionary) -> void:
 		hit_result.collider.apply_impulse(force_dir * 10.0, hit_result.point - hit_result.collider.global_position)
 		
 	# 3. VFX Layer (Hiệu ứng)
+	spawn_muzzle_flash()
 	spawn_tracer(hit_result.point)
+
 	if hit_result.hit:
+		spawn_impact(hit_result)
 		spawn_decal(hit_result.point, hit_result.normal, hit_result.collider)
 		
 	# 4. Feedback Layer (Recoil, Âm thanh)
@@ -85,6 +93,10 @@ func perform_reload_logic() -> void:
 	# Bơm vào băng đạn và trừ ở balo
 	weapon_data.current_magazine_ammo += ammo_to_reload
 	weapon_data.total_ammo -= ammo_to_reload
+	
+	#update hud_ui
+	if shooter_body and shooter_body.weapons_manager:
+		shooter_body.weapons_manager.ammo_updated.emit(weapon_data.current_magazine_ammo, weapon_data.total_ammo)
 
 
 func spawn_tracer(target_pos: Vector3) -> void:
@@ -124,3 +136,56 @@ func _get_faction(node: Node) -> String:
 	if node.is_in_group("enemy_faction"):
 		return "enemy"
 	return ""
+
+# Biến để lưu lại thực thể hiệu ứng đã tạo
+var _muzzle_flash_cache: Node3D = null
+var _particles: Array[GPUParticles3D] = []
+
+func spawn_muzzle_flash() -> void:
+	if not weapon_data.muzzle_flash_scene or not muzzle_point: return
+	
+	# 1. Nếu chưa có hiệu ứng, thì mới khởi tạo (Chỉ chạy 1 lần duy nhất)
+	if _muzzle_flash_cache == null:
+		_muzzle_flash_cache = weapon_data.muzzle_flash_scene.instantiate()
+		muzzle_point.add_child(_muzzle_flash_cache)
+		_muzzle_flash_cache.position = Vector3.ZERO
+		_muzzle_flash_cache.scale = Vector3.ONE
+		
+		# Lưu sẵn các node hạt vào Array để không phải dùng get_children() mỗi lần bắn
+		for child in _muzzle_flash_cache.get_children():
+			if child is GPUParticles3D:
+				_particles.append(child)
+
+	# 2. Kích hoạt toàn bộ các lớp lửa đã lưu trong Array
+	for p in _particles:
+		p.restart()
+		p.emitting = true
+
+func spawn_impact(hit_result: Dictionary) -> void:
+	if weapon_data.impacts.is_empty(): return
+	
+	# Xác định bề mặt trúng đạn. Mặc định là "default"
+	var surface = "default"
+	var collider = hit_result.collider
+	
+	# Dùng Group trong Godot để làm Tag
+	if collider.is_in_group("surface_flesh"):
+		surface = "flesh"
+	elif collider.is_in_group("surface_metal"):
+		surface = "metal"
+		
+	# Tìm impact scene tương ứng trong mảng weapon_data.impacts
+	var chosen_scene: PackedScene = null
+	for impact in weapon_data.impacts:
+		if impact.surface_tag == surface:
+			chosen_scene = impact.impact_scene
+			break
+			
+	# Nếu có cài đặt, tiến hành sinh ra ở điểm va chạm
+	if chosen_scene:
+		var impact_node = chosen_scene.instantiate()
+		get_tree().current_scene.add_child(impact_node)
+		impact_node.global_position = hit_result.point
+		
+		# Xoay hướng Particle ra ngoài bề mặt (dùng hàm tính toán giống decal)
+		# Copy 6 dòng cuối của hàm spawn_decal() đưa vào đây nếu bạn muốn hạt nảy ra đúng hướng
