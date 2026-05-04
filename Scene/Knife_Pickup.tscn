@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b74jf3mymvc05"]
+
+[ext_resource type="Script" uid="uid://cuxiepjbaupt7" path="res://Weapons/Melee/Knife_Pickup.gd" id="1_lhi45"]
+[ext_resource type="ArrayMesh" uid="uid://jbf2fmej48ef" path="res://Addons Weapons/Weapon Models/Melee/Swords/Sword1/Mesh.res" id="2_itwdx"]
+[ext_resource type="Script" uid="uid://cq52pllnofpif" path="res://PlayerCharacter/Interaction/interactable.gd" id="3_ck6di"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vqnk7"]
+size = Vector3(0.43579102, 1.9550781, 0.39556885)
+
+[node name="Knife_Pickup" type="RigidBody3D"]
+script = ExtResource("1_lhi45")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
+mesh = ExtResource("2_itwdx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, 0.6341797, -0.0121154785)
+shape = SubResource("BoxShape3D_vqnk7")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("3_ck6di")
+interact_name = "Katana"
+
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dy127gsfh8qyk"]
+
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_tnfpg"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_u4nnk"]
+
+[resource]
+script = ExtResource("2_u4nnk")
+weapon_name = "AK47"
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

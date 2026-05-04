@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://2e6tbdmv11lj"]
+
+[ext_resource type="Script" uid="uid://b52cuv37k12va" path="res://Weapons/Melee/MeleeEquipped.gd" id="1_p8gwm"]
+[ext_resource type="Script" uid="uid://br0ncel7a5q8s" path="res://Weapons/Melee/melee_idle_state.gd" id="3_68x3o"]
+[ext_resource type="Script" uid="uid://csn58hq4mn332" path="res://Weapons/StateMachine/weapon_state_machine.gd" id="3_b5ubg"]
+[ext_resource type="Script" uid="uid://cjmer82gjjryp" path="res://Weapons/Melee/melee_attack_state.gd" id="4_bgfcd"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="5_cil7f"]
+[ext_resource type="ArrayMesh" uid="uid://jbf2fmej48ef" path="res://Addons Weapons/Weapon Models/Melee/Swords/Sword1/Mesh.res" id="6_iv85v"]
+
+[sub_resource type="Animation" id="Animation_jgek0"]
+resource_name = "fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.098073184, 0.21763793, 0.21763793),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.098073184, 0.21763793, 0.21763793),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.6295266, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jutux"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_elubx"]
+_data = {
+&"RESET": SubResource("Animation_jutux"),
+&"fire": SubResource("Animation_jgek0")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cm1ko"]
+albedo_texture = ExtResource("5_cil7f")
+
+[node name="KnifeEquipped" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
+script = ExtResource("1_p8gwm")
+muzzle_point = NodePath("Model_Holder/Marker3D")
+
+[node name="WeaponStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_b5ubg")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("3_68x3o")
+attack_state = NodePath("../Attack")
+
+[node name="Attack" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("4_bgfcd")
+idle_state = NodePath("../Idle")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_elubx")
+}
+
+[node name="Model_Holder" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Marker3D" type="Marker3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18688774, -0.0056308657)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model_Holder"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.032438546, 0.026161358)
+material_override = SubResource("StandardMaterial3D_cm1ko")
+mesh = ExtResource("6_iv85v")

@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
 [ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
 [ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
-[ext_resource type="Resource" uid="uid://gl7jve1tw1pu" path="res://Weapons/Definitions/knife_data.tres" id="17_w05lp"]
+[ext_resource type="Resource" uid="uid://cq7pua2qhsxg6" path="res://Weapons/Definitions/knife_data.tres" id="17_w05lp"]
 [ext_resource type="Script" uid="uid://cmstbm14b0qsu" path="res://PlayerCharacter/Interaction/interactor.gd" id="18_1dajo"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
 [ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="24_671bg"]

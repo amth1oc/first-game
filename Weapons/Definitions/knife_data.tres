@@ -1,31 +1,28 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=9 format=3 uid="uid://gl7jve1tw1pu"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=9 format=3 uid="uid://cq7pua2qhsxg6"]
 
-[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_h7u8n"]
-[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_2q43n"]
-[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_fuvh6"]
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_ci283"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_2oq2q"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_l6i4l"]
 [ext_resource type="PackedScene" uid="uid://c67u6018b3g51" path="res://VFX Addons/HitImpacts/VFXScenes/impact_blood.tscn" id="3_0rrw5"]
-[ext_resource type="PackedScene" uid="uid://cx86yxxfyxxu2" path="res://Weapons/Definitions/knife_pickup.tscn" id="3_2q43n"]
-[ext_resource type="PackedScene" uid="uid://c0rdfn846hwi7" path="res://Bullet/Scene/KnifeEquipped.tscn" id="3_sv6nw"]
+[ext_resource type="PackedScene" uid="uid://2e6tbdmv11lj" path="res://Scene/Knife_Equipped.tscn" id="3_m4b6i"]
+[ext_resource type="PackedScene" uid="uid://b74jf3mymvc05" path="res://Scene/Knife_Pickup.tscn" id="4_l6i4l"]
 
-[sub_resource type="Resource" id="Resource_t8fxj"]
-script = ExtResource("1_h7u8n")
-impact_scene = ExtResource("2_fuvh6")
+[sub_resource type="Resource" id="Resource_h6xwq"]
+script = ExtResource("1_ci283")
+impact_scene = ExtResource("2_l6i4l")
 metadata/_custom_type_script = "uid://cd2x3627w6fv1"
 
-[sub_resource type="Resource" id="Resource_uocim"]
-script = ExtResource("1_h7u8n")
+[sub_resource type="Resource" id="Resource_fuvh6"]
+script = ExtResource("1_ci283")
 surface_tag = "flesh"
 impact_scene = ExtResource("3_0rrw5")
 metadata/_custom_type_script = "uid://cd2x3627w6fv1"
 
 [resource]
-script = ExtResource("2_2q43n")
-weapon_name = "Knife"
-weapon_equipped_scene = ExtResource("3_sv6nw")
-weapon_pickup_scene = ExtResource("3_2q43n")
-reload_time = 1.0
+script = ExtResource("2_2oq2q")
+weapon_name = "Katana"
+weapon_equipped_scene = ExtResource("3_m4b6i")
+weapon_pickup_scene = ExtResource("4_l6i4l")
 uses_ammo = false
-damage = 50
-fire_rate = 120.0
-impacts = Array[ExtResource("1_h7u8n")]([SubResource("Resource_t8fxj"), SubResource("Resource_uocim")])
+impacts = Array[ExtResource("1_ci283")]([SubResource("Resource_h6xwq"), SubResource("Resource_fuvh6")])
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
