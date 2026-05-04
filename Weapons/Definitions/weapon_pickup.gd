@@ -1,5 +1,5 @@
 # WeaponPickup.gd
-class_name WeaponPickup
+class_name AK47Pickup
 extends RigidBody3D
 
 @export var weapon_data: WeaponData

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=36 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://r141dxd7r45f" path="res://addons/PlayerCharacter/camera_raycasts.gd" id="17_ifmfs"]
 [ext_resource type="Resource" uid="uid://cq7pua2qhsxg6" path="res://Weapons/Definitions/knife_data.tres" id="17_w05lp"]
 [ext_resource type="Script" uid="uid://cmstbm14b0qsu" path="res://PlayerCharacter/Interaction/interactor.gd" id="18_1dajo"]
+[ext_resource type="Resource" uid="uid://dy127gsfh8qyk" path="res://Weapons/Definitions/AK47_data.tres" id="18_gfley"]
 [ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://addons/PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
 [ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="24_671bg"]
 [ext_resource type="PackedScene" uid="uid://cakaviw8kp11b" path="res://Scene/hud_ui.tscn" id="24_u7t1t"]
@@ -151,7 +152,7 @@ debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
 [node name="WeaponManager" type="Node3D" parent="CameraHolder/Camera" node_paths=PackedStringArray("shooter_body", "aim_ray")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.666, -0.304, -0.409)
 script = ExtResource("14_dp0tn")
-weapon_data_array = Array[ExtResource("15_1dajo")]([ExtResource("16_ifmfs"), ExtResource("17_w05lp")])
+weapon_data_array = Array[ExtResource("15_1dajo")]([ExtResource("16_ifmfs"), ExtResource("17_w05lp"), ExtResource("18_gfley")])
 shooter_body = NodePath("../../..")
 aim_ray = NodePath("../CameraRaycasts/AimRay")
 

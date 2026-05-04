@@ -1,0 +1,174 @@
+[gd_scene load_steps=22 format=3 uid="uid://betxfwjs11kck"]
+
+[ext_resource type="Script" uid="uid://bvcaxvstd2cdt" path="res://Weapons/Equip/WeaponEquipped.gd" id="1_q4fik"]
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="2_58ct3"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="3_ovaey"]
+[ext_resource type="PackedScene" uid="uid://dfqski22nyhod" path="res://Bullet/Scene/tracer.tscn" id="4_i283o"]
+[ext_resource type="PackedScene" uid="uid://12rt3qymk8hn" path="res://Bullet/Scene/bullet_decal.tscn" id="5_pqob3"]
+[ext_resource type="Script" uid="uid://glt7j2liakyo" path="res://Weapons/Equip/weapon_sway.gd" id="6_q8tip"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="7_3hgtt"]
+[ext_resource type="ArrayMesh" uid="uid://bdc7db1t6lmno" path="res://Addons Weapons/Weapon Models/Guns/MachineGuns/MachineGun1/Mesh_001.res" id="8_q4fik"]
+[ext_resource type="Script" uid="uid://csn58hq4mn332" path="res://Weapons/StateMachine/weapon_state_machine.gd" id="9_5vo2t"]
+[ext_resource type="Script" uid="uid://dmw46cycgbgw4" path="res://Weapons/StateMachine/weapon_idle_state.gd" id="10_q6400"]
+[ext_resource type="Script" uid="uid://bfehekwed35nf" path="res://Weapons/StateMachine/weapon_fire_state.gd" id="11_ba4gl"]
+[ext_resource type="Script" uid="uid://cvihgo52vdyt" path="res://Weapons/StateMachine/weapon_reload_state.gd" id="12_dv4vl"]
+[ext_resource type="Script" uid="uid://b4vbjm2nd4sln" path="res://Bullet/Scene/weapon_inspect_state.gd" id="13_0nb77"]
+
+[sub_resource type="Resource" id="Resource_gx0v3"]
+script = ExtResource("3_ovaey")
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4v2ea"]
+albedo_texture = ExtResource("7_3hgtt")
+
+[sub_resource type="Animation" id="Animation_jfxsp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qmqkn"]
+resource_name = "reload"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.21763813, 0.21763813),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ahfys"]
+_data = {
+&"RESET": SubResource("Animation_jfxsp"),
+&"reload": SubResource("Animation_qmqkn")
+}
+
+[sub_resource type="Animation" id="Animation_gx0v3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ahfys"]
+resource_name = "inspect"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 2),
+"transitions": PackedFloat32Array(1, 3.6050022, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.005466193, 0, 0.011985809), Vector3(0.005466193, 0, 0.011985809), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 3.6050022, 1, 2.4622886, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5707964, 0), Vector3(0, 4.712389, 0), Vector3(-1.5707964, 6.2831855, 0), Vector3(0, 6.2831855, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ynuqi"]
+_data = {
+&"RESET": SubResource("Animation_gx0v3"),
+&"inspect": SubResource("Animation_ahfys")
+}
+
+[node name="AK47Equipped" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+script = ExtResource("1_q4fik")
+weapon_data = SubResource("Resource_gx0v3")
+muzzle_point = NodePath("Model_Holder/MuzzlePoint")
+tracer_scene = ExtResource("4_i283o")
+decal_scene = ExtResource("5_pqob3")
+
+[node name="Model_Holder" type="Node3D" parent="."]
+script = ExtResource("6_q8tip")
+
+[node name="Pistol_Mesh" type="MeshInstance3D" parent="Model_Holder"]
+material_override = SubResource("StandardMaterial3D_4v2ea")
+mesh = ExtResource("8_q4fik")
+
+[node name="MuzzlePoint" type="Marker3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002108419, 0.018778546)
+visibility_parent = NodePath("../Pistol_Mesh")
+
+[node name="WeaponStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("9_5vo2t")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("fire_state", "reload_state", "inspect_state")]
+script = ExtResource("10_q6400")
+fire_state = NodePath("../Fire")
+reload_state = NodePath("../Reload")
+inspect_state = NodePath("../Inspect")
+
+[node name="Fire" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("11_ba4gl")
+idle_state = NodePath("../Idle")
+
+[node name="Reload" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("12_dv4vl")
+idle_state = NodePath("../Idle")
+
+[node name="Inspect" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("13_0nb77")
+idle_state = NodePath("../Idle")
+
+[node name="AnimationPlayerReload" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_ahfys")
+}
+speed_scale = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_ynuqi")
+}

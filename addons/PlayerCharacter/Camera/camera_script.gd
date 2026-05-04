@@ -107,6 +107,15 @@ func _process(delta: float) -> void:
 	mouse_mode()
 	process_camera_recoil(delta)
 
+	# ĐOẠN XỬ LÝ BẮN LIÊN THANH
+	if weapons_manager and weapons_manager.current_weapon_instance:
+		# Lấy dữ liệu của khẩu súng đang cầm
+		var current_data = weapons_manager.weapon_data_array[weapons_manager.current_weapon_index]
+		
+		# Nếu súng được bật chế độ Liên thanh VÀ chuột trái đang bị GIỮ (is_action_pressed)
+		if current_data.is_automatic and Input.is_action_pressed("fire"):
+			weapons_manager.attack()
+
 func process_camera_recoil(delta: float) -> void:
 	var previous_recoil = current_camera_recoil
 	target_camera_recoil = target_camera_recoil.lerp(Vector2.ZERO, camera_recoil_recovery_speed * delta)
@@ -125,7 +134,10 @@ func _unhandled_input(event) -> void:
 func _input(event: InputEvent) -> void:
 	if weapons_manager:
 		if event.is_action_pressed("fire"):
-			weapons_manager.attack()
+			# Chỉ những súng bắn phát một (không automatic) mới dùng hàm _input này
+			var current_data = weapons_manager.weapon_data_array[weapons_manager.current_weapon_index]
+			if not current_data.is_automatic:
+				weapons_manager.attack()
 		if event.is_action_pressed("reload"):
 			weapons_manager.reload_current_weapon()
 		if event.is_action_pressed("weapon_scroll_up"):

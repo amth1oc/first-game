@@ -23,6 +23,7 @@ var is_reloading: bool = false
 @export_category("Stats")
 @export var damage: int = 25
 @export var fire_rate: float = 600.0 # Tốc độ bắn (viên/phút)
+@export var is_automatic: bool = false # Tắt/bật chế độ bắn liên thanh
 
 @export_category("Feel")
 @export var recovery_speed: float = 7.0

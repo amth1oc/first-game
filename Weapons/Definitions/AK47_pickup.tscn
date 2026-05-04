@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4ohgy3v00asx"]
+
+[ext_resource type="Script" uid="uid://6gx202c8dhof" path="res://Weapons/Definitions/weapon_pickup.gd" id="1_3ls81"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="2_kmycd"]
+[ext_resource type="ArrayMesh" uid="uid://bdc7db1t6lmno" path="res://Addons Weapons/Weapon Models/Guns/MachineGuns/MachineGun1/Mesh_001.res" id="3_3ls81"]
+[ext_resource type="Script" uid="uid://cq52pllnofpif" path="res://PlayerCharacter/Interaction/interactable.gd" id="4_da03o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u54hk"]
+albedo_texture = ExtResource("2_kmycd")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v3p7t"]
+size = Vector3(0.2800207, 0.6715851, 2.0279584)
+
+[node name="revolver_pickup" type="RigidBody3D"]
+script = ExtResource("1_3ls81")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_u54hk")
+mesh = ExtResource("3_3ls81")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0030617714, -0.016487122, 0.3290739)
+shape = SubResource("BoxShape3D_v3p7t")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("4_da03o")
+interact_name = "Vandal"
+
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

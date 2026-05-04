@@ -8,5 +8,7 @@
 script = ExtResource("1_qvb8w")
 weapon_equipped_scene = ExtResource("2_r37wa")
 max_magazine_capacity = 6
-max_total_ammo = 60
+max_total_ammo = 30
+fire_rate = 200.0
+ai_fire_accuracy = 0.1
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

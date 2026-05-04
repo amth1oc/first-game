@@ -1,9 +1,34 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dy127gsfh8qyk"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=9 format=3 uid="uid://dy127gsfh8qyk"]
 
 [ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_tnfpg"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_3rhtr"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_u4nnk"]
+[ext_resource type="PackedScene" uid="uid://c67u6018b3g51" path="res://VFX Addons/HitImpacts/VFXScenes/impact_blood.tscn" id="3_nroky"]
+[ext_resource type="PackedScene" uid="uid://betxfwjs11kck" path="res://Bullet/Scene/AK47_Equipped.tscn" id="5_q3ulu"]
+[ext_resource type="PackedScene" uid="uid://b4ohgy3v00asx" path="res://Weapons/Definitions/AK47_pickup.tscn" id="6_l8xbt"]
+
+[sub_resource type="Resource" id="Resource_w6325"]
+script = ExtResource("1_tnfpg")
+impact_scene = ExtResource("2_3rhtr")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[sub_resource type="Resource" id="Resource_pfxj4"]
+script = ExtResource("1_tnfpg")
+surface_tag = "flesh"
+impact_scene = ExtResource("3_nroky")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
 
 [resource]
 script = ExtResource("2_u4nnk")
 weapon_name = "AK47"
+weapon_equipped_scene = ExtResource("5_q3ulu")
+weapon_pickup_scene = ExtResource("6_l8xbt")
+max_magazine_capacity = 15
+max_total_ammo = 60
+damage = 50
+fire_rate = 900.0
+is_automatic = true
+impacts = Array[ExtResource("1_tnfpg")]([SubResource("Resource_w6325"), SubResource("Resource_pfxj4")])
+recoil_kickback = 0.05
+ai_fire_accuracy = 0.1
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
