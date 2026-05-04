@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dg1qth8d6vfi7"]
+[gd_scene load_steps=17 format=3 uid="uid://dg1qth8d6vfi7"]
 
 [ext_resource type="Script" uid="uid://dwgtdxorrga20" path="res://Enemy/enemy_controller.gd" id="1_oc30w"]
 [ext_resource type="Resource" uid="uid://cph2ni0fjsbc2" path="res://Weapons/Definitions/enemy_revolver_data.tres" id="2_bqk24"]
@@ -24,6 +24,14 @@ emission_energy_multiplier = 2.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rvcw3"]
 radius = 50.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqk24"]
+bg_color = Color(0.99999994, 0.09386205, 0.13284957, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bqk24"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqk24"]
 
 [node name="Enemy" type="CharacterBody3D" groups=["surface_flesh"]]
 collision_layer = 4
@@ -83,3 +91,22 @@ alert_state = NodePath("../AlertState")
 script = ExtResource("7_prx6m")
 combat_state = NodePath("../CombatState")
 alert_state = NodePath("../AlertState")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(200, 30)
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport"]
+custom_minimum_size = Vector2(200, 30)
+offset_right = 4.0
+offset_bottom = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_bqk24")
+show_percentage = false
+
+[node name="HealthBar3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4916506, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_bqk24")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_bqk24")

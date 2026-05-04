@@ -140,6 +140,7 @@ shape = SubResource("BoxShape3D_3hddq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.595875, 1.5000005, 8.44862)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028028488, -9.536743e-07, -0.025146484)
 navigation_mesh = SubResource("NavigationMesh_olaan")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]

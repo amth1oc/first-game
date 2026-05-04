@@ -5,16 +5,21 @@ class_name EnemyController
 @export var weapon_data_resource: WeaponData
 @export var move_speed: float = 4.0
 @export var rotation_speed: float = 6.0
-
+@export var max_health: int = 100
 # === NODE REFERENCES ===
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var detection_area: Area3D = $DetectionArea
 @onready var aim_ray: RayCast3D = $AimRay
 @onready var weapons_manager: WeaponManager = $WeaponAnchor/WeaponManager
+@onready var health_bar : ProgressBar = $SubViewport/ProgressBar
 
 # === STATE ===
 var target_player: CharacterBody3D = null
 var weapon_data: WeaponData  # bản duplicate riêng
+
+# Biến trạng thái 
+var is_dead: bool = false
+var current_health: int = 100
 
 const GRAVITY: float = -9.8
 
@@ -22,6 +27,10 @@ func _ready() -> void:
 	add_to_group("enemy_faction")
 	# Dùng call_deferred để chạy SAU KHI toàn bộ _ready() xong
 	_setup.call_deferred()
+	current_health = max_health
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = current_health
 
 func _setup() -> void:
 	# Duplicate WeaponData
@@ -43,11 +52,19 @@ func _setup() -> void:
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
 
-
 func _physics_process(delta: float) -> void:
+	# Nếu đã chết, chỉ áp dụng trọng lực và lệnh di chuyển (để nó rơi xuyên sàn)
+	if is_dead:
+		velocity.y += GRAVITY * delta # GRAVITY là biến -9.8 bạn đã có
+		move_and_slide()
+		return # Thoát hàm, không chạy logic AI bên dưới nữa
+
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 	move_and_slide()
+
+
+
 
 # === NAVIGATION ===
 func navigate_to_target(delta: float) -> void:
@@ -137,6 +154,27 @@ func get_current_weapon_data() -> WeaponData:
 	return weapon_data
 
 # === TAKE DAMAGE (player sẽ gọi hàm này) ===
-func take_damage(amount: int, _shooter = null) -> void:
-	print("Enemy nhận %d damage!" % amount)
-	# TODO: thêm HP system sau
+func take_damage(amount: int, shooter = null) -> void:
+	if is_dead: return # Nếu chết rồi thì không nhận sát thương nữa
+	
+	current_health -= amount
+	health_bar.value = current_health # Cập nhật thanh máu trực tiếp
+	
+	if current_health <= 0:
+		die(shooter)
+
+func die(shooter):
+	is_dead = true
+	
+	# 1. Tắt va chạm để rơi xuyên sàn
+	$CollisionShape3D.set_deferred("disabled", true)
+	
+	# 2. Tính lực văng
+	if shooter:
+		var knockback_dir = (global_position - shooter.global_position).normalized()
+		# Văng ra xa và hơi nảy lên trên một chút cho đẹp
+		velocity = (knockback_dir + Vector3.UP * 0.5) * 15.0 
+	
+	# 3. Sau vài giây thì xóa hẳn kẻ địch để tránh nặng máy (dùng Timer hoặc await)
+	await get_tree().create_timer(3.0).timeout
+	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://2e6tbdmv11lj"]
+[gd_scene load_steps=18 format=3 uid="uid://2e6tbdmv11lj"]
 
 [ext_resource type="Script" uid="uid://b52cuv37k12va" path="res://Weapons/Melee/MeleeEquipped.gd" id="1_p8gwm"]
 [ext_resource type="Script" uid="uid://br0ncel7a5q8s" path="res://Weapons/Melee/melee_idle_state.gd" id="3_68x3o"]
@@ -8,8 +8,42 @@
 [ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="5_cil7f"]
 [ext_resource type="ArrayMesh" uid="uid://dpt1tcvvc1fvd" path="res://Addons Weapons/Weapon Models/Melee/Swords/Sword1/Mesh.res" id="6_iv85v"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cm1ko"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5ubg"]
 albedo_texture = ExtResource("5_cil7f")
+emission = Color(0.22430414, 0.22430411, 0.22430405, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b5ubg"]
+emission_shape_scale = Vector3(0.002, 0.015, 0.004)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, -4, 0)
+
+[sub_resource type="Gradient" id="Gradient_b5ubg"]
+colors = PackedColorArray(0.92099476, 0.9209946, 0.9209946, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_68x3o"]
+gradient = SubResource("Gradient_b5ubg")
+fill = 1
+fill_from = Vector2(0.3133903, 0.31623933)
+fill_to = Vector2(0.5641026, 0.4985755)
+
+[sub_resource type="ExternalTexture" id="ExternalTexture_p8gwm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8gwm"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+albedo_color = Color(0.7385896, 0.7385896, 0.7385896, 1)
+albedo_texture = SubResource("GradientTexture2D_68x3o")
+emission_enabled = true
+emission = Color(8.961672, 7.0600886, 0, 1)
+emission_operator = 1
+emission_texture = SubResource("ExternalTexture_p8gwm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_b5ubg"]
+material = SubResource("StandardMaterial3D_p8gwm")
+size = Vector2(0.001, 0.001)
 
 [sub_resource type="Animation" id="Animation_jutux"]
 length = 0.001
@@ -51,7 +85,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.5),
 "transitions": PackedFloat32Array(0.098073184, 0.21763793, 0.21763793),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.035351977, 0.28321365), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, -0.035351977, 0.2489244), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -85,8 +119,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.061626695, 0.020430416)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model_Holder"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.032438546, 0.026161358)
-material_override = SubResource("StandardMaterial3D_cm1ko")
+material_override = SubResource("StandardMaterial3D_b5ubg")
 mesh = ExtResource("6_iv85v")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Model_Holder/MeshInstance3D"]
+transform = Transform3D(-0.9998536, 0.016944421, 0.0011195029, -0.016761564, -0.99534154, 0.09488163, 0.0027219844, 0.094849154, 0.9954822, -0.0005903711, 0.017456058, -0.0006225358)
+visible = false
+amount = 90
+lifetime = 0.01
+speed_scale = 0.7
+visibility_aabb = AABB(2, 2, 2, 0.5, 0.5, 0.5)
+local_coords = true
+draw_order = 1
+process_material = SubResource("ParticleProcessMaterial_b5ubg")
+draw_pass_1 = SubResource("QuadMesh_b5ubg")
 
 [node name="WeaponStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_b5ubg")
