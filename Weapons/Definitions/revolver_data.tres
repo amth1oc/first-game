@@ -28,5 +28,7 @@ max_magazine_capacity = 6
 max_total_ammo = 30
 impacts = Array[ExtResource("1_8f5qe")]([SubResource("Resource_bbld0"), SubResource("Resource_jbmvy")])
 muzzle_flash_scene = ExtResource("4_345ik")
+recoil_kickback = 0.05
+recoil_rotation_degrees = Vector3(-5, 2, -10)
 ai_fire_accuracy = 0.95
 metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

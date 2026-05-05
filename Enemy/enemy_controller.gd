@@ -173,8 +173,8 @@ func die(shooter):
 	if shooter:
 		var knockback_dir = (global_position - shooter.global_position).normalized()
 		# Văng ra xa và hơi nảy lên trên một chút cho đẹp
-		velocity = (knockback_dir + Vector3.UP * 0.5) * 15.0 
+		velocity = (knockback_dir + Vector3.UP * 0.5) * 20.0 
 	
 	# 3. Sau vài giây thì xóa hẳn kẻ địch để tránh nặng máy (dùng Timer hoặc await)
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	queue_free()

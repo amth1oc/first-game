@@ -492,5 +492,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.437664, 1.0000002, -66.412
 [node name="GravityZone" parent="NavigationRegion3D/Map/MovementModifiers" instance=ExtResource("12_xwt62")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.640645, 2.5000005, -64.2022)
 
+[node name="CSGBox3D13" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1.8182456e-09, 0.9991345, -0.04159661, 4.3673555e-08, -0.04159661, -0.9991345, -1, 0, -4.371139e-08, -16.029999, -2.6489534, -148.65697)
+use_collision = true
+collision_layer = 5
+collision_mask = 2
+size = Vector3(28.258972, 9.499871, 1)
+material = ExtResource("7_qcysr")
+
 [node name="Enemy" parent="." instance=ExtResource("15_c3qfq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.243454, 1.945863, -39.697445)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="."]
+transform = Transform3D(0.9989887, 0.044961974, 0, -0.044961974, 0.9989887, 0, 0, 0, 1, -11.5, 10.39143, -111.36812)
+use_collision = true
+collision_mask = 2
+size = Vector3(17, 1, 41)
+material = ExtResource("6_1vjwj")

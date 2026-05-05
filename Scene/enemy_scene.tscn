@@ -37,6 +37,7 @@ viewport_path = NodePath("SubViewport")
 collision_layer = 4
 script = ExtResource("1_oc30w")
 weapon_data_resource = ExtResource("2_bqk24")
+max_health = 500
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_y6ecd")

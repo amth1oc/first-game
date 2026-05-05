@@ -81,7 +81,7 @@ func build_default_keybinding() -> void:
 	var mouse_mode_event = InputEventKey.new()
 	mouse_mode_event.physical_keycode = KEY_ESCAPE
 	var interact_event = InputEventKey.new()
-	interact_event.physical_keycode = KEY_E
+	interact_event.physical_keycode = KEY_V
 
 	default_input_actions = {
 		zoom_action : [zoom_event],

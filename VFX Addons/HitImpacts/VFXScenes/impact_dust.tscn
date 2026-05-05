@@ -7,14 +7,14 @@ _limits = [-200.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_1p54h"]
+[sub_resource type="CurveTexture" id="CurveTexture_hgqet"]
 curve = SubResource("Curve_2ayg1")
 
 [sub_resource type="Curve" id="Curve_o22gq"]
 _data = [Vector2(0, 1), 0.0, -2.5, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_yq12y"]
+[sub_resource type="CurveTexture" id="CurveTexture_ipn6m"]
 curve = SubResource("Curve_o22gq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r8n13"]
@@ -27,12 +27,12 @@ direction = Vector3(0, 0, -1)
 spread = 0.0
 initial_velocity_min = 0.01
 initial_velocity_max = 0.01
-angular_velocity_curve = SubResource("CurveTexture_1p54h")
+angular_velocity_curve = SubResource("CurveTexture_hgqet")
 gravity = Vector3(0, 0, 0)
 scale_min = 0.8
-scale_curve = SubResource("CurveTexture_yq12y")
+scale_curve = SubResource("CurveTexture_ipn6m")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6d64"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvwjo"]
 transparency = 1
 blend_mode = 1
 shading_mode = 0
@@ -44,14 +44,14 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="BoxMesh" id="BoxMesh_45mmy"]
-material = SubResource("StandardMaterial3D_c6d64")
+material = SubResource("StandardMaterial3D_kvwjo")
 size = Vector3(0.5, 0.5, 0.05)
 
 [sub_resource type="Gradient" id="Gradient_24483"]
 offsets = PackedFloat32Array(0, 0.49226)
 colors = PackedColorArray(1, 1, 1, 1, 1, 0.835294, 0.490196, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_q2oqo"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nvf7e"]
 gradient = SubResource("Gradient_24483")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e1s4b"]
@@ -66,9 +66,9 @@ damping_min = 8.0
 damping_max = 10.0
 scale_min = 0.5
 scale_max = 0.8
-color_ramp = SubResource("GradientTexture1D_q2oqo")
+color_ramp = SubResource("GradientTexture1D_nvf7e")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b246a"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtpub"]
 blend_mode = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
@@ -79,14 +79,14 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="BoxMesh" id="BoxMesh_g16r6"]
-material = SubResource("StandardMaterial3D_b246a")
+material = SubResource("StandardMaterial3D_vtpub")
 size = Vector3(0.05, 0.05, 0.7)
 
 [sub_resource type="Curve" id="Curve_x8jva"]
 _data = [Vector2(0, 0), 0.0, 2.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.5, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_1e680"]
+[sub_resource type="CurveTexture" id="CurveTexture_jjhjc"]
 curve = SubResource("Curve_x8jva")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_653d3"]
@@ -102,9 +102,9 @@ damping_max = 5.0
 scale_min = 0.2
 scale_max = 0.4
 color = Color(0.678431, 0.588235, 0.45098, 1)
-alpha_curve = SubResource("CurveTexture_1e680")
+alpha_curve = SubResource("CurveTexture_jjhjc")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6r03d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkgnp"]
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
@@ -115,7 +115,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="BoxMesh" id="BoxMesh_63fke"]
-material = SubResource("StandardMaterial3D_6r03d")
+material = SubResource("StandardMaterial3D_pkgnp")
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qf56l"]
@@ -131,11 +131,11 @@ gravity = Vector3(0, -15, 0)
 damping_min = 1.0
 damping_max = 2.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5kpr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vub17"]
 albedo_color = Color(0.407843, 0.352941, 0.301961, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_k720e"]
-material = SubResource("StandardMaterial3D_x5kpr")
+material = SubResource("StandardMaterial3D_vub17")
 size = Vector3(0.08, 0.08, 0.08)
 
 [node name="ImpactDust" type="Node3D"]

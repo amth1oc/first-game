@@ -30,8 +30,8 @@ func _physics_process(_delta: float) -> void:
 	if interact_ray.is_colliding():
 		var interactable = find_interactable(interact_ray.get_collider())
 		if interactable and owner and owner.hud_ui:
-			# Hiện UI: "Press V to Nhặt Revolver"
-			owner.hud_ui.show_interact("Bấm E để " + interactable.interact_text + " " + interactable.interact_name)
+			# Hiện UI: "Press V to Nhặt"
+			owner.hud_ui.show_interact("Bấm V để " + interactable.interact_text + " " + interactable.interact_name)
 			return
 			
 	# Nếu tia Raycast không trúng gì, hoặc vật đó không phải Interactable thì ẩn UI

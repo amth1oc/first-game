@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=6 format=3 uid="uid://bjvsvu5k8p5m2"]
+
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_2tj2s"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_bf6qo"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_ubb0c"]
+[ext_resource type="PackedScene" uid="uid://vj562f6mrpuv" path="res://Scene/Grapple_Equipped.tscn" id="3_ubb0c"]
+
+[sub_resource type="Resource" id="Resource_fegnf"]
+script = ExtResource("1_2tj2s")
+impact_scene = ExtResource("2_bf6qo")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[resource]
+script = ExtResource("2_ubb0c")
+weapon_name = "Grapple gun"
+weapon_equipped_scene = ExtResource("3_ubb0c")
+uses_ammo = false
+is_automatic = true
+impacts = Array[ExtResource("1_2tj2s")]([SubResource("Resource_fegnf")])
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://b74jf3mymvc05"]
+[gd_scene load_steps=7 format=3 uid="uid://b74jf3mymvc05"]
 
 [ext_resource type="Script" uid="uid://cuxiepjbaupt7" path="res://Weapons/Melee/Knife_Pickup.gd" id="1_lhi45"]
-[ext_resource type="ArrayMesh" uid="uid://jbf2fmej48ef" path="res://Addons Weapons/Weapon Models/Melee/Swords/Sword1/Mesh.res" id="2_itwdx"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="2_ck6di"]
+[ext_resource type="ArrayMesh" uid="uid://dpt1tcvvc1fvd" path="res://Addons Weapons/Weapon Models/Melee/Swords/Sword1/Mesh.res" id="2_itwdx"]
 [ext_resource type="Script" uid="uid://cq52pllnofpif" path="res://PlayerCharacter/Interaction/interactable.gd" id="3_ck6di"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqnk7"]
+albedo_texture = ExtResource("2_ck6di")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vqnk7"]
 size = Vector3(0.43579102, 1.9550781, 0.39556885)
@@ -12,6 +16,7 @@ script = ExtResource("1_lhi45")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vqnk7")
 mesh = ExtResource("2_itwdx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

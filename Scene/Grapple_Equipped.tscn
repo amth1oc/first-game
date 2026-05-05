@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://vj562f6mrpuv"]
+
+[ext_resource type="Script" uid="uid://spfuehmfutk1" path="res://Weapons/Grapple Gun/GrappleEquipped.gd" id="1_vley1"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="2_17gpa"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_17gpa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lrge"]
+shading_mode = 0
+albedo_texture = ExtResource("2_17gpa")
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_vley1"]
+
+[node name="GrappleEquipped" type="Node3D"]
+script = ExtResource("1_vley1")
+pull_strength = 30.0
+
+[node name="Model_Holder" type="Node3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="GunMesh" type="MeshInstance3D" parent="Model_Holder"]
+mesh = SubResource("CylinderMesh_17gpa")
+
+[node name="MuzzlePoint" type="Marker3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3002326, 0)
+
+[node name="RopeVisual" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_8lrge")
+mesh = SubResource("ImmediateMesh_vley1")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -50, 0)

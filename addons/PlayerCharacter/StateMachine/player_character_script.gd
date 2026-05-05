@@ -223,13 +223,15 @@ func build_default_keybinding() -> void:
 		run_action : [Key.KEY_SHIFT],
 		crouch_action : [Key.KEY_CTRL],
 		jump_action : [Key.KEY_SPACE],
-		slide_action : [Key.KEY_E],
+		slide_action : [Key.KEY_C],
 		dash_action : [Key.KEY_Q],
 		fly_action : [Key.KEY_F],
 		reload_action : [Key.KEY_R],
 		inspect_action : [Key.KEY_Y],
 		throw_weapon : [Key.KEY_G],
-		interact : [Key.KEY_V]
+		#interact : [Key.KEY_V]
+		# được quy định ở camera script rồi
+		# để dễ dàng quản lý
 	}
 	
 func input_actions_check() -> void:
