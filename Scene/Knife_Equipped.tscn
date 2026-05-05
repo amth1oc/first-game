@@ -108,14 +108,14 @@ _data = {
 
 [node name="KnifeEquipped" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
 script = ExtResource("1_p8gwm")
-muzzle_point = NodePath("Model_Holder/Marker3D")
+muzzle_point = NodePath("Model_Holder/MuzzlePoint")
 
 [node name="Model_Holder" type="Node3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0)
 script = ExtResource("5_b5ubg")
 
-[node name="Marker3D" type="Marker3D" parent="Model_Holder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.061626695, 0.020430416)
+[node name="MuzzlePoint" type="Marker3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07073649, 0.02605905)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model_Holder"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.032438546, 0.026161358)

@@ -70,7 +70,17 @@ func input_management() -> void:
 		
 	if Input.is_action_just_pressed(play_char.fly_action):
 		transitioned.emit(self, "FlyState")
-		
+
+	### trạng thái đu dây
+	if Input.is_action_just_pressed("grapple"):
+		# 1. Lấy dữ liệu súng hiện tại
+		var wm = play_char.weapons_manager
+		var current_weapon_data = wm.weapon_data_array[wm.current_weapon_index]
+		# 2. Kiểm tra nếu là Kiếm (Knife) thì mới cho đu
+		if current_weapon_data.weapon_name == "Katana":
+			if wm.aim_ray.is_colliding():
+				transitioned.emit(self, "GrappleState")
+
 func move(delta : float) -> void:
 	play_char.input_direction = Input.get_vector(play_char.move_left_action, play_char.move_right_action, play_char.move_forward_action, play_char.move_backward_action)
 	play_char.move_direction = (play_char.cam_holder.global_basis * Vector3(play_char.input_direction.x, 0.0, play_char.input_direction.y)).normalized()

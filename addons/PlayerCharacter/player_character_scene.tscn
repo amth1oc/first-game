@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=37 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://hc1xroood24q" path="res://addons/PlayerCharacter/StateMachine/slide_state_script.gd" id="10_poibi"]
 [ext_resource type="Script" uid="uid://c4skioddhqatw" path="res://addons/PlayerCharacter/StateMachine/dash_state_script.gd" id="11_khex2"]
 [ext_resource type="Script" uid="uid://bq1stj2mujnp2" path="res://addons/PlayerCharacter/StateMachine/wallrun_state_script.gd" id="12_5fuve"]
+[ext_resource type="Script" uid="uid://qt2wecrcekmd" path="res://addons/PlayerCharacter/StateMachine/grapple_state_script.gd" id="13_m2cla"]
 [ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="14_dp0tn"]
 [ext_resource type="LabelSettings" uid="uid://bs0stms0b56kp" path="res://addons/Arts/label_settings.tres" id="14_gfbru"]
 [ext_resource type="Shader" uid="uid://b34228uop3gdf" path="res://addons/PlayerCharacter/Shaders/speed_lines_shader.gdshader" id="14_jv0i6"]
@@ -116,6 +117,9 @@ metadata/_custom_type_script = "uid://8g033x6qm1rx"
 [node name="WallrunState" type="Node" parent="StateMachine"]
 script = ExtResource("12_5fuve")
 metadata/_custom_type_script = "uid://bq1stj2mujnp2"
+
+[node name="GrappleState" type="Node" parent="StateMachine"]
+script = ExtResource("13_m2cla")
 
 [node name="CameraHolder" type="Node3D" parent="." node_paths=PackedStringArray("weapons_manager")]
 unique_name_in_owner = true

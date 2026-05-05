@@ -4,7 +4,7 @@ class_name HUD
 
 #player character reference variable
 @export var play_char : PlayerCharacter
-
+@export var speed_threshold : float = 20.0 
 #label references variables
 @onready var current_state_label_text: Label = %CurrentStateLabelText
 @onready var desired_move_speed_label_text: Label = %DesiredMoveSpeedLabelText
@@ -29,9 +29,18 @@ class_name HUD
 
 func _process(_delta : float) -> void:
 	display_current_FPS()
-	
 	display_properties()
+
+	_update_speed_lines()
 	
+func _update_speed_lines() -> void:
+	var current_speed = play_char.velocity.length()
+	if current_speed > speed_threshold:
+		display_speed_lines(true)
+	else:
+		display_speed_lines(false)
+
+
 func display_properties() -> void:
 	#player character properties
 	current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))

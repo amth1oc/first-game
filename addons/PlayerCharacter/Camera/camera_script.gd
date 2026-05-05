@@ -22,7 +22,8 @@ class_name CameraObject
 	"Run" : Vector2(100.0, 0.2),
 	"Slide" : Vector2(100.0, 0.2),
 	"Dash" : Vector2(110.0, 0.05),
-	"Fly" : Vector2(100.0, 0.2)
+	"Fly" : Vector2(100.0, 0.2),
+	"Grapple" : Vector2(110.0, 0.2)
 }
 
 @export_group("Zoom variables")

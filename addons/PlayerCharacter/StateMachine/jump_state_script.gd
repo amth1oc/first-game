@@ -57,7 +57,18 @@ func input_management() -> void:
 		
 	if Input.is_action_just_pressed(play_char.fly_action):
 		transitioned.emit(self, "FlyState")
-		
+
+
+	### trạng thái đu dây
+	if Input.is_action_just_pressed("grapple"):
+		# 1. Lấy dữ liệu súng hiện tại
+		var wm = play_char.weapons_manager
+		var current_weapon_data = wm.weapon_data_array[wm.current_weapon_index]
+		# 2. Kiểm tra nếu là Kiếm (Knife) thì mới cho đu
+		if current_weapon_data.weapon_name == "Katana":
+			if wm.aim_ray.is_colliding():
+				transitioned.emit(self, "GrappleState")
+	
 func wall_check() -> void:
 	#check if play char collide with a left or right wall, and if all the conditions are correct, start wallrunning (by transitioning to the wallrun state)
 	if play_char.can_wallrun and (!play_char.is_on_floor() or play_char.is_on_wall()) and !play_char.wallrun_floor_check.is_colliding():
