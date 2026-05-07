@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://qvox15ycl07u"]
+
+[ext_resource type="Script" uid="uid://y3wtvt65js53" path="res://VFX/Levitation/levitation_skill.gd" id="1_151kb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32771"]
+transparency = 1
+emission_enabled = true
+emission = Color(0.26001814, 0.47939783, 1, 1)
+emission_energy_multiplier = 7.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hpxdu"]
+material = SubResource("StandardMaterial3D_32771")
+top_radius = 3.0
+bottom_radius = 3.0
+height = 0.01
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_w3fnr"]
+height = 0.01
+radius = 3.0
+
+[node name="LevitationSkill" type="Area3D"]
+script = ExtResource("1_151kb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_hpxdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_w3fnr")

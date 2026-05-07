@@ -5,8 +5,8 @@ class_name CameraObject
 
 #camera variables
 @export_group("Camera variables")
-@export_range(0.0, 0.5, 0.001) var x_axis_sensibility : float = 0.05
-@export_range(0.0, 0.5, 0.001) var y_axis_sensibility : float = 0.05
+@export_range(0.0, 0.5, 0.001) var x_axis_sensibility : float = 0.04
+@export_range(0.0, 0.5, 0.001) var y_axis_sensibility : float = 0.04
 @export_range(-360.0, 0.0, 0.01) var max_up_angle_view : float = -90.0 #in degrees
 @export_range(0.0, 360.0, 0.01) var max_down_angle_view : float = 90.0 #in degrees
 @export_range(5.0, 175.0, 0.01) var fov : float = 90.0
@@ -23,7 +23,9 @@ class_name CameraObject
 	"Slide" : Vector2(100.0, 0.2),
 	"Dash" : Vector2(110.0, 0.05),
 	"Fly" : Vector2(100.0, 0.2),
-	"Grapple" : Vector2(110.0, 0.2)
+	"Grapple" : Vector2(110.0, 0.2),
+	"Levitation" : Vector2(90.0, 0.2),
+	"GroundSlam" : Vector2(110.0, 0.1)
 }
 
 @export_group("Zoom variables")
@@ -55,6 +57,7 @@ var camera_recoil_recovery_speed: float = 7.0
 @export var interact_action : StringName = "interact" 
 @export var mouse_mode_action : StringName = "play_char_mouse_mode_action"
 
+
 @onready var input_actions_list : Array[StringName] = [zoom_action, mouse_mode_action, fire_action, interact_action]
 @export var check_on_ready_if_inputs_registered : bool = true
 var default_input_actions : Dictionary
@@ -65,6 +68,10 @@ var state : String
 @onready var camera : Camera3D = $Camera
 @onready var play_char : PlayerCharacter = $".."
 @onready var hud : CanvasLayer = $"../HUD"
+
+# Biến quản lý rung
+var shake_strength : float = 0.0
+var shake_decay : float = 5.0
 
 func _ready() -> void:
 	if not weapons_manager and has_node("Camera/WeaponManager"):
@@ -116,6 +123,14 @@ func _process(delta: float) -> void:
 		# Nếu súng được bật chế độ Liên thanh VÀ chuột trái đang bị GIỮ (is_action_pressed)
 		if current_data.is_automatic and Input.is_action_pressed("fire"):
 			weapons_manager.attack()
+
+	# Xử lý giảm dần độ rung
+	if shake_strength > 0:
+		shake_strength = lerp(shake_strength, 0.0, shake_decay * delta)
+		# Áp dụng rung ngẫu nhiên vào vị trí Camera
+		camera.h_offset = randf_range(-shake_strength, shake_strength)
+		camera.v_offset = randf_range(-shake_strength, shake_strength)
+
 
 func process_camera_recoil(delta: float) -> void:
 	var previous_recoil = current_camera_recoil
@@ -221,3 +236,6 @@ func change_fov() -> void:
 		fov_change_tween.tween_property(camera, "fov", camera.fov - zoom_val, zoom_duration)
 		fov_change_tween.finished.connect(Callable(fov_change_tween, "kill"))
 		
+func apply_shake(strength: float):
+	shake_strength = strength
+	

@@ -4,6 +4,7 @@ class_name MeleeEquipped
 @export var weapon_data: WeaponData
 @export var muzzle_point: Marker3D
 @export var impact_scene: PackedScene
+@export var distance_gamage_melee: float
 
 var current_hit_result: Dictionary
 
@@ -32,10 +33,10 @@ func attack(hit_result: Dictionary) -> void:
 		anim_player.stop()
 		anim_player.play("fire")
 
-	# 2. Xử lý sát thương (chỉ gây damage nếu ở gần < 2.0 mét)
+	# 2. Xử lý sát thương
 	if hit_result.hit:
 		var distance = muzzle_point.global_position.distance_to(hit_result.point)
-		if distance <= 2.0:
+		if distance <= distance_gamage_melee:
 			if hit_result.collider.has_method("take_damage"):
 				hit_result.collider.take_damage(weapon_data.damage, shooter_body)
 			

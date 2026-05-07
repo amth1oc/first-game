@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dg1qth8d6vfi7"]
+[gd_scene load_steps=18 format=3 uid="uid://dg1qth8d6vfi7"]
 
 [ext_resource type="Script" uid="uid://dwgtdxorrga20" path="res://Enemy/enemy_controller.gd" id="1_oc30w"]
 [ext_resource type="Resource" uid="uid://cph2ni0fjsbc2" path="res://Weapons/Definitions/enemy_revolver_data.tres" id="2_bqk24"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://crmnyakrdbfw8" path="res://Enemy/states/enemy_alert_state.gd" id="5_drvfl"]
 [ext_resource type="Script" uid="uid://b6vfwqy386jx4" path="res://Enemy/states/enemy_combat_state.gd" id="6_7lrq3"]
 [ext_resource type="Script" uid="uid://k0y5lrngyms4" path="res://Enemy/states/enemy_reload_state.gd" id="7_prx6m"]
+[ext_resource type="Script" uid="uid://bgydwpter0uol" path="res://Enemy/states/enemy_levitated_state.gd" id="10_yiywh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y6ecd"]
 radius = 0.4
@@ -37,6 +38,8 @@ viewport_path = NodePath("SubViewport")
 collision_layer = 4
 script = ExtResource("1_oc30w")
 weapon_data_resource = ExtResource("2_bqk24")
+move_speed = null
+rotation_speed = null
 max_health = 500
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
@@ -92,6 +95,10 @@ alert_state = NodePath("../AlertState")
 script = ExtResource("7_prx6m")
 combat_state = NodePath("../CombatState")
 alert_state = NodePath("../AlertState")
+
+[node name="EnemyLevitatedState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("return_state")]
+script = ExtResource("10_yiywh")
+return_state = NodePath("../AlertState")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true

@@ -78,6 +78,9 @@ func input_management() -> void:
 		if current_weapon_data.weapon_name == "Katana":
 			if wm.aim_ray.is_colliding():
 				transitioned.emit(self, "GrappleState")
+	 ##  trạng thái ground slam
+	if Input.is_action_just_pressed("skill_ground_slam"):
+		transitioned.emit(self, "GroundSlamState")
 
 
 

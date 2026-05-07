@@ -5,6 +5,9 @@ extends CanvasLayer
 @onready var ammo_count: Label = $MarginContainer/WeaponUI/AmmoCount
 @onready var interact_prompt: Label = $MarginContainer/InteractPrompt
 @onready var damage_overlay = $DamageOverlay
+@onready var focus_bar = $FocusBar
+@onready var focus_overlay = $FocusOverlay
+
 func _ready():
 	interact_prompt.hide() # Ẩn đi lúc mới vào game
 
@@ -59,3 +62,7 @@ func flash_damage_overlay():
 	# 2. Sau đó mờ dần về 0 (trong suốt) trong khoảng 0.4 giây
 	tween.tween_property(damage_overlay, "color:a", 0.0, 0.4)
 	
+func update_focus_bar(current: float, max_val: float):
+	
+	focus_bar.max_value = max_val
+	focus_bar.value = current

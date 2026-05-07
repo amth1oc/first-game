@@ -1,0 +1,183 @@
+[gd_scene load_steps=15 format=3 uid="uid://n1wf60u3bbf7"]
+
+[ext_resource type="Script" uid="uid://bm5sdeiyxc66q" path="res://Weapons/Axe/Axe_Equipped.gd" id="1_govug"]
+[ext_resource type="Texture2D" uid="uid://dq6lmmv7chko6" path="res://Addons Weapons/Weapon Textures/atlass_1_diffuse.png" id="1_yqsdq"]
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="2_g35k0"]
+[ext_resource type="ArrayMesh" uid="uid://b5u0i3o50dt13" path="res://Addons Weapons/Weapon Models/Melee/Axes/Axe1/mesh_001.res" id="2_govug"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="3_15g3r"]
+[ext_resource type="Script" uid="uid://bmsaw76fdj5ge" path="res://Weapons/Axe/fire_state.gd" id="6_15g3r"]
+[ext_resource type="Script" uid="uid://cwogo1vist0u8" path="res://Scene/weapon_state_machine_for_axe.gd" id="6_ro5wf"]
+[ext_resource type="Script" uid="uid://d2aam67qtjyp8" path="res://Weapons/Axe/idle.gd" id="8_nw6lb"]
+
+[sub_resource type="Resource" id="Resource_7edwv"]
+script = ExtResource("3_15g3r")
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ll1o"]
+albedo_texture = ExtResource("1_yqsdq")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g35k0"]
+size = Vector3(1.6, 1.6, 1.6)
+
+[sub_resource type="Animation" id="Animation_7edwv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_15g3r"]
+resource_name = "attack_swing"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model_Holder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.12499998, 0.12499998, 0.43527535),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.14544287, 0.34866342), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model_Holder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.12499998, 0.12499998, 0.43527535),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.8671184, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.1830108, 0.1830108, 0.46651664),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.113680184, 0.3343507), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.1830108, 0.1830108, 0.46651664),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.8612714, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.16666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_apply_damage"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ro5wf"]
+_data = {
+&"RESET": SubResource("Animation_7edwv"),
+&"attack_swing": SubResource("Animation_15g3r")
+}
+
+[node name="Axe Equipped" type="Node3D"]
+script = ExtResource("1_govug")
+weapon_data = SubResource("Resource_7edwv")
+
+[node name="Model_Holder" type="Node3D" parent="."]
+
+[node name="Axe_mesh" type="MeshInstance3D" parent="Model_Holder"]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_1ll1o")
+mesh = ExtResource("2_govug")
+skeleton = NodePath("../..")
+
+[node name="MuzzlePoint" type="Marker3D" parent="Model_Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4709726, 0.2562642)
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29654813, 0.8128109)
+shape = SubResource("BoxShape3D_g35k0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ro5wf")
+}
+
+[node name="WeaponStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_ro5wf")
+initial_state = NodePath("Idle")
+
+[node name="FireState" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_15g3r")
+next_state = NodePath("../Idle")
+
+[node name="Idle" type="Node" parent="WeaponStateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("8_nw6lb")
+attack_state = NodePath("../FireState")

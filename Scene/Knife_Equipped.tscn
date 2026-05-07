@@ -109,6 +109,7 @@ _data = {
 [node name="KnifeEquipped" type="Node3D" node_paths=PackedStringArray("muzzle_point")]
 script = ExtResource("1_p8gwm")
 muzzle_point = NodePath("Model_Holder/MuzzlePoint")
+distance_gamage_melee = 4.0
 
 [node name="Model_Holder" type="Node3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0)

@@ -69,6 +69,10 @@ func input_management() -> void:
 			if wm.aim_ray.is_colliding():
 				transitioned.emit(self, "GrappleState")
 	
+	##  trạng thái ground slam
+	if Input.is_action_just_pressed("skill_ground_slam"):
+		transitioned.emit(self, "GroundSlamState")
+	
 func wall_check() -> void:
 	#check if play char collide with a left or right wall, and if all the conditions are correct, start wallrunning (by transitioning to the wallrun state)
 	if play_char.can_wallrun and (!play_char.is_on_floor() or play_char.is_on_wall()) and !play_char.wallrun_floor_check.is_colliding():

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cakaviw8kp11b"]
+[gd_scene load_steps=17 format=3 uid="uid://cakaviw8kp11b"]
 
 [ext_resource type="FontFile" uid="uid://u671v6jg326t" path="res://UI Addons/Share_Tech_Mono_Font/ShareTechMono-Regular.ttf" id="1_pheos"]
 [ext_resource type="Script" uid="uid://bpc6inh3ussp" path="res://Scene/hud_ui.gd" id="1_w4kbu"]
 [ext_resource type="Shader" uid="uid://ccaajnlwi3ygh" path="res://VFX/Shaders/hud_ui.gdshader" id="3_xlfnr"]
+[ext_resource type="Shader" uid="uid://cl2dcl5arid4x" path="res://HUD UI/FocusOverlay.gdshader" id="4_f46bi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egvvm"]
 bg_color = Color(0.07058824, 0.07058824, 0.07058824, 0.6039216)
@@ -38,7 +39,17 @@ shadow_size = 4
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f46bi"]
 shader = ExtResource("3_xlfnr")
-shader_parameter/vignette_softness = 0.5
+shader_parameter/fade_depth = 0.4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctsir"]
+bg_color = Color(0.21568628, 0.21568628, 0.21568628, 0.42352942)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ihrd"]
+bg_color = Color(0, 0.7294118, 0.19607843, 0.84705883)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v21pk"]
+shader = ExtResource("4_f46bi")
+shader_parameter/intensity = 0.0
 
 [node name="HUD_UI" type="CanvasLayer"]
 script = ExtResource("1_w4kbu")
@@ -120,3 +131,40 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0.19, 0.21699995, 0)
+
+[node name="FocusBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(270, 8)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -546.0
+offset_top = 558.0
+offset_right = -246.0
+offset_bottom = 579.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ctsir")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8ihrd")
+show_percentage = false
+
+[node name="FocusLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(300, 0)
+offset_left = 30.0
+offset_top = 536.0
+offset_right = 330.0
+offset_bottom = 558.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_pheos")
+theme_override_styles/normal = SubResource("StyleBoxFlat_f46bi")
+text = " SKILL FOCUS"
+label_settings = SubResource("LabelSettings_w4kbu")
+
+[node name="FocusOverlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_v21pk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1254902, 0, 1, 1)

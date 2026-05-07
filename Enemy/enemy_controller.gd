@@ -178,3 +178,14 @@ func die(shooter):
 	# 3. Sau vài giây thì xóa hẳn kẻ địch để tránh nặng máy (dùng Timer hoặc await)
 	await get_tree().create_timer(2.0).timeout
 	queue_free()
+
+# Hàm này để vòng tròn kỹ năng gọi tới
+func levitate():
+	# Chỉ nhấc nếu kẻ địch chưa chết và chưa ở trạng thái bị nhấc
+	if is_dead: return
+	
+	var state_machine = $EnemyStateMachine
+	if state_machine and not state_machine.current_state is EnemyLevitatedState:
+		var lev_state = state_machine.get_node_or_null("EnemyLevitatedState")
+		if lev_state:
+			state_machine.change_state(lev_state)

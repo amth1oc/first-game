@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bwggrf7sbmkcv"]
+[gd_scene load_steps=40 format=3 uid="uid://bwggrf7sbmkcv"]
 
 [ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://addons/PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
 [ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://addons/PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
@@ -7,10 +7,13 @@
 [ext_resource type="Script" uid="uid://c4skioddhqatw" path="res://addons/PlayerCharacter/StateMachine/dash_state_script.gd" id="11_khex2"]
 [ext_resource type="Script" uid="uid://bq1stj2mujnp2" path="res://addons/PlayerCharacter/StateMachine/wallrun_state_script.gd" id="12_5fuve"]
 [ext_resource type="Script" uid="uid://qt2wecrcekmd" path="res://addons/PlayerCharacter/StateMachine/grapple_state_script.gd" id="13_m2cla"]
+[ext_resource type="Script" uid="uid://dqwanwe5vdvok" path="res://addons/PlayerCharacter/StateMachine/levitation_state_script.gd" id="14_8ke6w"]
 [ext_resource type="Script" uid="uid://boqs6hl6yc4w4" path="res://addons/PlayerCharacter/Weapon_Manager.gd" id="14_dp0tn"]
 [ext_resource type="LabelSettings" uid="uid://bs0stms0b56kp" path="res://addons/Arts/label_settings.tres" id="14_gfbru"]
 [ext_resource type="Shader" uid="uid://b34228uop3gdf" path="res://addons/PlayerCharacter/Shaders/speed_lines_shader.gdshader" id="14_jv0i6"]
 [ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="15_1dajo"]
+[ext_resource type="Script" uid="uid://pv72bwpv8tir" path="res://addons/PlayerCharacter/StateMachine/ground_slam_state_script.gd" id="15_d68p1"]
+[ext_resource type="PackedScene" uid="uid://0rsn6yklbwms" path="res://VFX/ImpactVFX.tscn" id="16_2pclp"]
 [ext_resource type="Script" uid="uid://dx02l6p6behb8" path="res://addons/PlayerCharacter/UI/hud_script.gd" id="16_5jm78"]
 [ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://addons/Arts/crosshair.png" id="16_gfbru"]
 [ext_resource type="Resource" uid="uid://bntjn4dlwhq16" path="res://Weapons/Definitions/revolver_data.tres" id="16_ifmfs"]
@@ -121,10 +124,19 @@ metadata/_custom_type_script = "uid://bq1stj2mujnp2"
 [node name="GrappleState" type="Node" parent="StateMachine"]
 script = ExtResource("13_m2cla")
 
+[node name="LevitationState" type="Node" parent="StateMachine"]
+script = ExtResource("14_8ke6w")
+
+[node name="GroundSlamState" type="Node" parent="StateMachine"]
+script = ExtResource("15_d68p1")
+impact_vfx_scene = ExtResource("16_2pclp")
+
 [node name="CameraHolder" type="Node3D" parent="." node_paths=PackedStringArray("weapons_manager")]
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.715, 0)
 script = ExtResource("2_x12n0")
+x_axis_sensibility = 0.03
+y_axis_sensibility = 0.03
 weapons_manager = NodePath("Camera/WeaponManager")
 
 [node name="Camera" type="Camera3D" parent="CameraHolder"]

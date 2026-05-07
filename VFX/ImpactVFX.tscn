@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://0rsn6yklbwms"]
+
+[ext_resource type="Script" uid="uid://c8ud1wiw2td3o" path="res://VFX/impact_vfx.gd" id="1_i6ot3"]
+
+[sub_resource type="Curve" id="Curve_sosmd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_887jr"]
+curve = SubResource("Curve_sosmd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_viclv"]
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -20, 0)
+scale_curve = SubResource("CurveTexture_887jr")
+
+[sub_resource type="BoxMesh" id="BoxMesh_w08ry"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="ImpactVFX" type="GPUParticles3D"]
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_viclv")
+draw_pass_1 = SubResource("BoxMesh_w08ry")
+script = ExtResource("1_i6ot3")

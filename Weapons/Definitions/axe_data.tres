@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=8 format=3 uid="uid://cikokoys0mw50"]
+
+[ext_resource type="Script" uid="uid://cd2x3627w6fv1" path="res://Weapons/Definitions/WeaponImpact.gd" id="1_21noe"]
+[ext_resource type="PackedScene" uid="uid://trx15q5wrqyc" path="res://VFX Addons/HitImpacts/VFXScenes/impact_dust.tscn" id="2_no3w1"]
+[ext_resource type="Script" uid="uid://c4tyhi71ub6yk" path="res://Weapons/Definitions/Weapon_Data.gd" id="2_xbkpm"]
+[ext_resource type="PackedScene" uid="uid://c67u6018b3g51" path="res://VFX Addons/HitImpacts/VFXScenes/impact_blood.tscn" id="3_2uiq3"]
+[ext_resource type="PackedScene" uid="uid://n1wf60u3bbf7" path="res://Scene/Axe_Equipped.tscn" id="5_ruer7"]
+
+[sub_resource type="Resource" id="Resource_efeg0"]
+script = ExtResource("1_21noe")
+impact_scene = ExtResource("2_no3w1")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[sub_resource type="Resource" id="Resource_yf7ay"]
+script = ExtResource("1_21noe")
+surface_tag = "flesh"
+impact_scene = ExtResource("3_2uiq3")
+metadata/_custom_type_script = "uid://cd2x3627w6fv1"
+
+[resource]
+script = ExtResource("2_xbkpm")
+weapon_name = "Axe"
+weapon_equipped_scene = ExtResource("5_ruer7")
+uses_ammo = false
+damage = 100
+impacts = Array[ExtResource("1_21noe")]([SubResource("Resource_efeg0"), SubResource("Resource_yf7ay")])
+metadata/_custom_type_script = "uid://c4tyhi71ub6yk"

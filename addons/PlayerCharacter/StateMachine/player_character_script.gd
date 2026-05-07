@@ -50,7 +50,7 @@ var walk_or_run: String = "WalkState" #keep in memory if play char was walking o
 @export var walk_deccel: float = 10.0
 
 @export_group("Run variables")
-@export var run_speed: float = 12.0
+@export var run_speed: float = 14.0
 @export var run_accel: float = 10.0
 @export var run_deccel: float = 9.0
 @export var continious_run: bool = false #if true, doesn't need to keep run button on to run
@@ -140,6 +140,15 @@ var fly_boost_on: bool = false
 @onready var jump_gravity: float = (-1.5 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 @onready var fall_gravity: float = (-2.0 * jump_height) / (jump_time_to_fall * jump_time_to_fall)
 
+@export_group("Focus Variables")
+@export var focus_time_scale : float = 0.3 # Thời gian chậm lại còn 30%
+@export var focus_drain_speed : float = 20.0 # Tốn 20 năng lượng mỗi giây
+@export var focus_regen_speed : float = 10.0 # Hồi 10 năng lượng mỗi giây
+@export var max_focus : float = 100.0
+var current_focus : float = 100.0
+var is_focusing : bool = false
+
+
 @export_group("Keybind variables")
 @export var move_forward_action: StringName = "move_forward"
 @export var move_backward_action: StringName = "move_backward"
@@ -155,9 +164,10 @@ var fly_boost_on: bool = false
 @export var inspect_action : StringName = "inspect"
 @export var throw_weapon : StringName = "throw_weapon"
 @export var interact : StringName = "interact"
+@export var skill_levitation : StringName = "skill_levitation"
 
 @onready var input_actions_list : Array[StringName] = [move_forward_action, move_backward_action, move_left_action, move_right_action, 
-run_action, crouch_action, jump_action, slide_action, dash_action, fly_action]
+run_action, crouch_action, jump_action, slide_action, dash_action, fly_action, skill_levitation]
 @export var check_on_ready_if_inputs_registered : bool = true
 var default_input_actions : Dictionary
 
@@ -175,6 +185,7 @@ var default_input_actions : Dictionary
 @onready var slide_floor_check: RayCast3D = %SlideFloorCheck
 @onready var left_wall_check : RayCast3D = %LeftWallCheck
 @onready var right_wall_check : RayCast3D = %RightWallCheck
+@onready var focus_overlay = $HUD_UI/FocusOverlay 
 
 func _ready() -> void:
 	###### thêm vào player group
@@ -229,11 +240,13 @@ func build_default_keybinding() -> void:
 		reload_action : [Key.KEY_R],
 		inspect_action : [Key.KEY_Y],
 		throw_weapon : [Key.KEY_G],
+		skill_levitation : [Key.KEY_T]
 		#interact : [Key.KEY_V]
 		# được quy định ở camera script rồi
 		# để dễ dàng quản lý
+		# vì interactor quản lý việc tương tác not player
 	}
-	
+
 func input_actions_check() -> void:
 	#check if the input actions written in the editor are the same as the ones registered in the Input map, and if they are written correctly
 	#if not, add it to runtime Input map with default keybindings
@@ -242,7 +255,7 @@ func input_actions_check() -> void:
 		for input_action in InputMap.get_actions():
 			if input_action.begins_with(&"play_char_"):
 				registered_input_actions.append(input_action)
-				
+
 		for input_action in input_actions_list:
 			if input_action == &"":
 				assert(false, "There's an undefined input action")
@@ -272,9 +285,17 @@ func _process(delta: float) -> void:
 
 	dash_timer(delta)
 	
+	handle_focus_logic(delta)
+	
 	###############thêm vào để nhận inspect weapon
 	if Input.is_action_just_pressed("inspect_weapon"):
 		weapons_manager.inspect_current_weapon()
+	####### thêm vào để dùng skill lực nâng
+	if Input.is_action_just_pressed("skill_levitation") and is_on_floor():
+		state_machine.on_state_child_transition(state_machine.curr_state, "LevitationState")
+	
+	
+
 
 	
 func _physics_process(_delta: float) -> void:
@@ -360,4 +381,29 @@ func take_damage(amount: int, _shooter = null) -> void:
 	if hud_ui:
 		hud_ui.flash_damage_overlay()
 		print("đã đỏ màn hình")
-	
+
+## skill làm chậm không gian - focus - bullet time
+func handle_focus_logic(delta: float):
+	if Input.is_action_pressed("skill_focus") and current_focus > 0:
+		is_focusing = true
+		Engine.time_scale = lerp(Engine.time_scale, focus_time_scale, 0.1)
+		current_focus -= focus_drain_speed * (1.0 / Engine.time_scale) * delta
+		
+		# HIỆU ỨNG: Hiện Overlay (tăng Alpha hoặc Shader intensity)
+		#focus_overlay.modulate.a = lerp(focus_overlay.modulate.a, 0.3, 0.1) 
+		# Nếu dùng Shader, hãy dùng dòng này thay thế:
+		focus_overlay.material.set_shader_parameter("intensity", 0.8)
+		
+	else:
+		is_focusing = false
+		Engine.time_scale = lerp(Engine.time_scale, 1.0, 0.1)
+		if current_focus < max_focus:
+			current_focus += focus_regen_speed * delta
+			
+		# HIỆU ỨNG: Ẩn Overlay
+		focus_overlay.modulate.a = lerp(focus_overlay.modulate.a, 0.0, 0.1)
+		# focus_overlay.material.set_shader_parameter("intensity", 0.0)
+
+	# Cập nhật UI
+	if hud_ui:
+		hud_ui.update_focus_bar(current_focus, max_focus)
