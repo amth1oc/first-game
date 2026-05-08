@@ -5,6 +5,7 @@ class_name EnemyCombatState
 @export var alert_state: EnemyState
 
 var fire_timer: float = 0.0
+var _detect_timer: float = 0.0
 
 func enter() -> void:
 	fire_timer = _get_fire_interval()
@@ -14,9 +15,13 @@ func exit() -> void:
 
 func update(delta: float) -> void:
 	# Mất tầm nhìn → Alert
-	if not enemy.can_see_player():
-		state_machine.change_state(alert_state)
-		return
+	_detect_timer -= delta
+	if _detect_timer <= 0.0:
+		_detect_timer = 0.15
+		if not enemy.can_see_player():
+			state_machine.change_state(alert_state)
+			return
+
 	
 	enemy.look_at_player(delta)
 	enemy.strafe_around_player(delta)

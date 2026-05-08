@@ -105,7 +105,7 @@ func can_see_player() -> bool:
 	if not target_player:
 		return false
 	aim_ray.target_position = aim_ray.to_local(target_player.global_position + Vector3(0, 0.8, 0))
-	aim_ray.force_raycast_update()
+	#aim_ray.force_raycast_update()
 	if not aim_ray.is_colliding():
 		return false
 	var col = aim_ray.get_collider()
@@ -176,8 +176,12 @@ func die(shooter):
 		velocity = (knockback_dir + Vector3.UP * 0.5) * 20.0 
 	
 	# 3. Sau vài giây thì xóa hẳn kẻ địch để tránh nặng máy (dùng Timer hoặc await)
-	await get_tree().create_timer(2.0).timeout
-	queue_free()
+	var death_timer = get_tree().create_timer(2.0)
+	death_timer.timeout.connect(func():
+		if is_instance_valid(self):
+			queue_free()
+	)
+
 
 # Hàm này để vòng tròn kỹ năng gọi tới
 func levitate():

@@ -502,6 +502,8 @@ material = ExtResource("7_qcysr")
 
 [node name="Enemy" parent="." instance=ExtResource("15_c3qfq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.243454, 1.945863, -39.697445)
+move_speed = 4.0
+rotation_speed = 6.0
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="."]
 transform = Transform3D(0.9989887, 0.044961974, 0, -0.044961974, 0.9989887, 0, 0, 0, 1, -11.5, 10.39143, -111.36812)

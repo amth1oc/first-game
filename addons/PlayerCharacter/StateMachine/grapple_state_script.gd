@@ -73,7 +73,7 @@ func physics_update(delta: float):
 		# 3. Sau khi nhìn, ta xoay thêm 180 độ để CÁN hướng về phía trước thay vì MŨI
 		weapon.rotation_degrees.x += 20 
 		weapon.rotation_degrees.y += 200
-		weapon.translate(Vector3(-0.0002, 0, 0))
+		#weapon.translate(Vector3(-0.0002, 0, 0))
 		
 		# 4. (Tùy chọn) Làm cho chuyển động xoay mượt mà hơn bằng lerp
 		# Nếu bạn thấy kiếm xoay quá gắt, hãy dùng lerp_angle

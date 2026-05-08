@@ -145,6 +145,8 @@ var fly_boost_on: bool = false
 @export var focus_drain_speed : float = 20.0 # Tốn 20 năng lượng mỗi giây
 @export var focus_regen_speed : float = 10.0 # Hồi 10 năng lượng mỗi giây
 @export var max_focus : float = 100.0
+@export var focus_smooth_speed : float = 8.0
+
 var current_focus : float = 100.0
 var is_focusing : bool = false
 
@@ -376,17 +378,17 @@ func take_damage(amount: int, _shooter = null) -> void:
 	current_health -= amount
 	current_health = clamp(current_health, 0, max_health)
 	health_changed.emit(current_health, max_health)
-	print("Player nhận %d damage! HP: %d" % [amount, current_health])
+	#print("Player nhận %d damage! HP: %d" % [amount, current_health])
 	# Gọi hiệu ứng ửng đỏ trên HUD_UI
 	if hud_ui:
 		hud_ui.flash_damage_overlay()
-		print("đã đỏ màn hình")
+	#	print("đã đỏ màn hình")
 
 ## skill làm chậm không gian - focus - bullet time
 func handle_focus_logic(delta: float):
 	if Input.is_action_pressed("skill_focus") and current_focus > 0:
 		is_focusing = true
-		Engine.time_scale = lerp(Engine.time_scale, focus_time_scale, 0.1)
+		Engine.time_scale = move_toward(Engine.time_scale, focus_time_scale, focus_smooth_speed * delta)
 		current_focus -= focus_drain_speed * (1.0 / Engine.time_scale) * delta
 		
 		# HIỆU ỨNG: Hiện Overlay (tăng Alpha hoặc Shader intensity)
@@ -396,7 +398,7 @@ func handle_focus_logic(delta: float):
 		
 	else:
 		is_focusing = false
-		Engine.time_scale = lerp(Engine.time_scale, 1.0, 0.1)
+		Engine.time_scale = move_toward(Engine.time_scale, 1.0, focus_smooth_speed * delta)
 		if current_focus < max_focus:
 			current_focus += focus_regen_speed * delta
 			

@@ -6,6 +6,7 @@ class_name EnemyWanderState
 
 var wander_timer: float = 0.0
 var wander_interval: float = 3.5
+var _detect_timer: float = 0.0
 
 func enter() -> void:
 	_pick_new_wander_target()
@@ -23,8 +24,12 @@ func update(delta: float) -> void:
 		_pick_new_wander_target()
 	
 	# Nếu phát hiện player → Alert
-	if enemy.can_see_player():
-		state_machine.change_state(alert_state)
+	_detect_timer -= delta
+	if _detect_timer <= 0.0:
+		_detect_timer = 0.2  ### tiết kiệm tài nguyên hơn
+		if enemy.can_see_player():
+			state_machine.change_state(alert_state)
+
 
 func _pick_new_wander_target() -> void:
 	wander_timer = wander_interval

@@ -21,6 +21,7 @@ var current_weapon_instance: Node3D # A reference to the currently active weapon
 var weapon_instances: Array[Node3D] = [] # An array to hold all spawned weapon instances
 
 var weapons_initialized: bool = false
+var _cached_weapon_sm: Node = null
 
 # Add after the variables
 
@@ -102,7 +103,8 @@ func switch_weapon(index: int) -> void:
 		ammo_updated.emit(weapon_data_array[index].current_magazine_ammo, weapon_data_array[index].total_ammo)
 
 		current_weapon_instance.set_process_mode(Node.PROCESS_MODE_INHERIT)
-		print("WeaponManager: Switched to weapon %s" % current_weapon_instance.name)
+		_cached_weapon_sm = current_weapon_instance.get_node_or_null("WeaponStateMachine")
+		#print("WeaponManager: Switched to weapon %s" % current_weapon_instance.name)
 	else:
 		printerr("WeaponManager: Weapon instance at index %d is null." % index)
 
@@ -168,10 +170,8 @@ func attack() -> void:
 		current_weapon_instance.current_hit_result = hit_result
 		
 		# 3. Kích hoạt State Bắn (Fire) nếu súng dùng hệ thống State Machine mới
-		if current_weapon_instance.has_node("WeaponStateMachine"):
-			current_weapon_instance.get_node("WeaponStateMachine").send_action("fire")
-		
-		# (Giữ lại logic cũ phòng trường hợp có súng chưa chuyển sang State Machine)
+		if _cached_weapon_sm:
+			_cached_weapon_sm.send_action("fire")
 		elif current_weapon_instance.has_method("attack"):
 			current_weapon_instance.attack()
 
@@ -179,9 +179,8 @@ func attack() -> void:
 func reload_current_weapon() -> void:
 	if current_weapon_instance:
 		# Kích hoạt State Nạp đạn (Reload)
-		if current_weapon_instance.has_node("WeaponStateMachine"):
-			current_weapon_instance.get_node("WeaponStateMachine").send_action("reload")
-			
+		if _cached_weapon_sm:
+			_cached_weapon_sm.send_action("reload")
 		# Giữ logic cũ cho súng cũ
 		elif current_weapon_instance.has_method("manual_reload"):
 			current_weapon_instance.manual_reload()
@@ -218,8 +217,8 @@ func throw_current_weapon(throw_force: Vector3 = Vector3.ZERO) -> bool:
 ###inspect curent weapon 
 func inspect_current_weapon() -> void:
 	if current_weapon_instance:
-		if current_weapon_instance.has_node("WeaponStateMachine"):
-			current_weapon_instance.get_node("WeaponStateMachine").send_action("inspect")
+		if _cached_weapon_sm:
+			_cached_weapon_sm.send_action("inspect")
 
 
 func get_throw_direction(throw_strength: float = 7.5) -> Vector3:
@@ -264,7 +263,7 @@ func pickup_weapon(new_weapon_data: WeaponData) -> bool:
 			if existing_data.uses_ammo:
 				existing_data.total_ammo += new_weapon_data.current_magazine_ammo + new_weapon_data.total_ammo
 				existing_data.total_ammo = min(existing_data.total_ammo, existing_data.max_total_ammo)
-				print("Added ammo to %s" % existing_data.weapon_name)
+				#print("Added ammo to %s" % existing_data.weapon_name)
 				return true # Indicate success
 			else:
 				return false # Can't pick up duplicate melee weapon

@@ -8,12 +8,19 @@ var play_char : CharacterBody3D
 @export var aoe_radius : float = 6.0
 @export var aoe_damage : int = 50
 @export var knockup_force : float = 12.0
+var _aoe_sphere : SphereShape3D
+var _aoe_query : PhysicsShapeQueryParameters3D
 
 
 func enter(play_char_ref : CharacterBody3D):
 	play_char = play_char_ref
 	# Bắt đầu lao xuống ngay lập tức	
 	play_char.velocity = Vector3(0, -slam_speed, 0)
+	if not _aoe_sphere:
+		_aoe_sphere = SphereShape3D.new()
+		_aoe_query = PhysicsShapeQueryParameters3D.new()
+		_aoe_query.shape = _aoe_sphere
+
 
 func physics_update(_delta: float):
 	# Nếu chạm đất thì thực hiện nổ AOE
@@ -24,17 +31,14 @@ func physics_update(_delta: float):
 func perform_aoe():
 	# 1. Thiết lập vùng kiểm tra hình cầu (Sphere)
 	var space_state = play_char.get_world_3d().direct_space_state
-	var shape_query = PhysicsShapeQueryParameters3D.new()
 	
 	# Tạo một hình cầu để quét
-	var sphere = SphereShape3D.new()
-	sphere.radius = aoe_radius
-	shape_query.shape = sphere
-	shape_query.transform = play_char.global_transform
-	
+	_aoe_sphere.radius = aoe_radius
+	_aoe_query.transform = play_char.global_transform
+
 	# Chỉ quét các vật thể thuộc lớp va chạm (collision layer) của kẻ địch và đồ vật
 	# Mặc định quét tất cả nếu bạn không chắc chắn về layer
-	var results = space_state.intersect_shape(shape_query)
+	var results = space_state.intersect_shape(_aoe_query)
    
 	for result in results:
 		var body = result.collider
